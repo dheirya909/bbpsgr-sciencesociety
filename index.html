@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Society</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-tertiary: #2C2C2C;
+            --dark-text: #E0E0E0;
+            --accent-color: #00FFD4;
+            --accent-secondary: #FF6B6B;
+            --hover-color: #00B4A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--dark-tertiary));
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0, 255, 212, 0.2);
+            transform: translateY(50px) scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-secondary);
+            transform: rotate(90deg);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .modal h2 {
+            color: var(--accent-color);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .modal p {
+            color: var(--dark-text);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(45deg, var(--accent-color), var(--hover-color));
+            color: var(--dark-bg);
+        }
+
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 212, 0.4);
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            color: var(--dark-text);
+            border: 2px solid var(--dark-tertiary);
+        }
+
+        .modal-btn.secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(0, 255, 212, 0.1);
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 212, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a, .nav-item > p {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item > a:hover, .nav-item > p:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--dark-secondary);
+            min-width: 200px;
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            list-style-type: none;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            color: var(--dark-text);
+            padding: 0.75rem 1.5rem;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--dark-tertiary);
+            color: var(--accent-color);
+            padding-left: 2rem;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)),
+                        url('/images/innoverse.png') no-repeat center center;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            background: rgba(30, 30, 30, 0.067);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            border: 4px solid rgba(0, 255, 212, 0.1);
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            opacity: 0.9;
+        }
+
+        /* Enhanced Science Grid */
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 5rem 5%;
+            background: linear-gradient(to bottom, var(--dark-bg), var(--dark-secondary));
+        }
+
+        .science-card {
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 212, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .science-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 212, 0.1));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .science-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .science-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .science-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .science-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .science-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .science-card p {
+            color: var(--dark-text);
+            opacity: 0.8;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+            transition: 0.4s;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            transform-origin: 0%;
+            transform: scaleX(0);
+            z-index: 1001;
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--dark-bg);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                transition: 0.3s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .dropdown {
+                position: static;
+                background: transparent;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+            }
+
+            .nav-item:hover .dropdown {
+                display: block;
+            }
+
+            .hero-content {
+                padding: 2rem;
+            }
+
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        .footer {
+            background: var(--dark-secondary);
+            color: var(--dark-text);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgb(0, 255, 213);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--dark-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--hover-color);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="modal" id="resultsModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2>INNOVERSE 1.0 Results Declared!</h2>
+            <p>The competition results have been officially announced. Check out the winners and participants who showcased exceptional scientific talent and innovation.</p>
+            <div class="modal-buttons">
+                <a href="/results/innoverseresult.html" class="modal-btn primary">
+                    <i class="fas fa-medal"></i>
+                    View Results
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="/logo.png" alt="Science Society Logo">
+            <span class="logo-text">Science Society</span>
+        </a>
+        
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="/index.html">Home</a></li>
+            <li class="nav-item">
+                <p>Events</p>
+                <ul class="dropdown">
+                    <li><a href="/events.html">Events</a></li>
+                    <li><a href="/media.html">Media</a></li>
+                    <li><a href="/results/results.html">Results</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <p>Members</p>
+                <ul class="dropdown">
+                    <li><a href="/members/ob.html">Office Bearers</a></li>
+                    <li><a href="/members/teachers.html">Teachers Incharge</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="/contact.html">Contact</a></li>
+            <li class="nav-item"><a href="/innoverse.html" style="color: #00B4A6;">Innoverse</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Science Society <br>BBPS GRH</h1>
+            <p>Empowering young scientists through innovative research and exploration. Join us in pushing the boundaries of scientific discovery and technological advancement.</p>
+        </div>
+    </section>
+
+    <section class="science-grid" id="research">
+        <div class="science-card">
+            <i class="fas fa-camera"></i>
+            <h3>Many upcoming events!</h3>
+            <p>Join our exciting events and workshops designed to inspire and educate the next generation of scientists.</p>
+        </div>
+        <div class="science-card">
+            <i class="fas fa-flask"></i>
+            <h3>Chemistry Lab</h3>
+            <p>Experience hands-on learning in our state-of-the-art chemistry laboratory with cutting-edge equipment.</p>
+        </div>
+        <div class="science-card">
+            <i class="fas fa-atom"></i>
+            <h3>Physics Exploration</h3>
+            <p>Dive deep into the fundamentals of physics through practical experiments and theoretical studies.</p>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>BBPS GRH Science Society is dedicated to fostering scientific curiosity and innovation among students.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/company/science_society/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/sciencesocietybbpsgr?igsh=dDQ3OHN5YnFzMXEw&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BBPS GRH Science Society | All Rights Reserved</p>
+            <p>Developers - Dheirya Kharbanda, Agamjot Singh Bindra</p>
+            
+    <a href="/Reports/webreport.pdf" download class="download-btn" style="text-align: center;"> School website report</a>
+        </div>
+    </footer>
+
+    <script>
+
+         // Modal functionality
+        const modal = document.getElementById('resultsModal');
+        const modalClose = document.getElementById('modalClose');
+
+        // Show modal when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 1000); // Show after 1 second delay
+        });
+
+        // Close modal function
+        function closeModal() {
+            modal.classList.remove('show');
+        }
+
+        // Close modal on close button click
+        modalClose.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.pageYOffset / totalHeight) * 100;
+            scrollProgress.style.transform = `scaleX(${progress / 100})`;
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

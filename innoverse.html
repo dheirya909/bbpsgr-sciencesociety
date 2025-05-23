@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Society - Innoverse Countdown</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-tertiary: #2C2C2C;
+            --dark-text: #E0E0E0;
+            --accent-color: #00FFD4;
+            --accent-secondary: #FF6B6B;
+            --hover-color: #00B4A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 212, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a, .nav-item > p {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item > a:hover, .nav-item > p:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--dark-secondary);
+            min-width: 200px;
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            list-style-type: none;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            color: var(--dark-text);
+            padding: 0.75rem 1.5rem;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--dark-tertiary);
+            color: var(--accent-color);
+            padding-left: 2rem;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 5% 0 5%; /* Added top padding to account for fixed navbar height */
+            position: relative;
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)),
+                        url('/images/innoverse.png') no-repeat center center; /* Make sure this image path is correct */
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            background: rgba(30, 30, 30, 0.84);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            border: 1px solid rgba(0, 255, 212, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+             to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            opacity: 0.9;
+        }
+
+        .hero-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 212, 0.3);
+        }
+
+        /* Countdown Section Styles */
+        .countdown-section {
+            padding: 4rem 5%;
+            background-color: var(--dark-secondary);
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 212, 0.1);
+        }
+
+        .countdown-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem; /* Adjust gap if needed */
+            flex-wrap: wrap;
+            max-width: 900px; /* Increased max-width slightly for the extra block */
+            margin: 0 auto;
+        }
+
+        .time-block {
+            background: var(--dark-tertiary);
+            padding: 1.5rem 1.8rem; /* Slightly adjusted padding */
+            border-radius: 15px;
+            min-width: 130px; /* Increased min-width slightly */
+            border: 1px solid rgba(0, 255, 212, 0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            text-align: center; /* Ensure text is centered */
+        }
+
+        .time-block:hover {
+             transform: translateY(-5px);
+        }
+
+        .time-block span {
+            display: block;
+            font-size: clamp(2rem, 7vw, 2.8rem); /* Slightly adjusted font size */
+            font-weight: bold;
+            color: var(--accent-color);
+            line-height: 1.1;
+            min-height: 1.1em; /* Ensure space even if number is small initially */
+        }
+
+        .time-block p {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem); /* Slightly smaller label */
+            color: var(--dark-text);
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        /* --- END Countdown Section Styles --- */
+
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+            transition: 0.4s;
+            border-radius: 1px;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            transform-origin: 0%;
+            transform: scaleX(0);
+            z-index: 1001;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--dark-secondary);
+            color: var(--dark-text);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgb(0, 255, 213);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            text-align: left;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--dark-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+         @media (max-width: 768px) {
+            .footer-section {
+                text-align: center;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+
+        .social-icons a {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--hover-color);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--dark-secondary);
+            padding: 2.5rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            margin: auto;
+            position: relative;
+            transform: translateY(-50px) scale(0.95);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            border: 1px solid var(--accent-color);
+            opacity: 0;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-secondary);
+            transform: rotate(90deg);
+        }
+
+        .download-btn {
+             display: inline-block;
+             padding: 0.8rem 1.5rem;
+             border-radius: 25px;
+             text-decoration: none;
+             background: var(--accent-color);
+             color: var(--dark-bg);
+             border: none;
+             font-weight: bold;
+             transition: background-color 0.3s ease, transform 0.3s ease;
+             margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
+        }
+
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .navbar { /* Reduce navbar padding */
+                 padding: 0.8rem 5%;
+            }
+
+            .hero { /* Adjust hero top padding */
+                 padding-top: 70px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 300px;
+                background: var(--dark-bg);
+                flex-direction: column;
+                padding: 6rem 2rem 2rem 2rem;
+                transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-item > a, .nav-item > p {
+                display: block;
+                padding: 0.8rem 0;
+                width: 100%;
+            }
+
+             .nav-item::after {
+                bottom: 0;
+                left: 0;
+                height: 1px;
+             }
+
+
+            .dropdown {
+                position: static;
+                background: transparent;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                min-width: unset;
+                padding: 0 0 0 1rem;
+                margin-top: -0.5rem;
+            }
+
+             .nav-item:hover .dropdown {
+                 display: block;
+             }
+
+             .dropdown a {
+                 padding: 0.5rem 0;
+             }
+             .dropdown a:hover {
+                 background: none;
+                 color: var(--accent-color);
+                 padding-left: 0;
+             }
+
+
+            .hero-content {
+                padding: 2rem;
+                width: 90%;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            /* Responsive Countdown */
+            .countdown-timer {
+                gap: 1rem;
+                max-width: 100%; /* Allow full width for wrapping */
+            }
+            .time-block {
+                min-width: 95px; /* Adjust min-width */
+                padding: 1rem 1rem; /* Adjust padding */
+                 flex-basis: 45%; /* Try to fit two per row */
+                 margin-bottom: 1rem; /* Add space when wrapped */
+            }
+             /* --- END Responsive Countdown --- */
+        }
+
+        @media (max-width: 480px) {
+             .time-block {
+                 min-width: 80px; /* Even smaller */
+                 padding: 0.8rem 0.8rem;
+                 flex-basis: 40%; /* Still aim for two per row */
+             }
+             .time-block span {
+                 font-size: clamp(1.6rem, 6vw, 2rem); /* Smaller numbers */
+             }
+             .time-block p {
+                 font-size: 0.7rem; /* Smaller labels */
+             }
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="/logo.png" alt="Science Society Logo">
+            <span class="logo-text">Science Society</span>
+        </a>
+
+        <div class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="/index.html">Home</a></li>
+            <li class="nav-item">
+                <p>Events</p>
+                <ul class="dropdown">
+                    <li><a href="/events.html">Events</a></li>
+                    <li><a href="/media.html">Media</a></li>
+                    <li><a href="/results/results.html">Results</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <p>Members</p>
+                <ul class="dropdown">
+                    <li><a href="/members/ob.html">Office Bearers</a></li>
+                    <li><a href="/members/teachers.html">Teachers Incharge</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="/contact.html">Contact</a></li>
+            <li class="nav-item"><a href="/innoverse.html" style="color: #00B4A6;">Innoverse</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 style="text-align: center;">Innoverse 2025-26</h1>
+            <p>Empowering young scientists through innovative research and exploration. Join us in pushing the boundaries of scientific discovery and technological advancement.</p>
+            <button class="hero-button" id="openModal">Registration Info</button>
+        </div>
+    </section>
+
+    <section class="countdown-section">
+        <h2 id="countdown-heading">Countdown to Innoverse 2025</h2>
+        <div class="countdown-timer" id="countdownTimer">
+            <div class="time-block">
+                <span id="days">00</span>
+                <p>Days</p>
+            </div>
+            <div class="time-block">
+                <span id="hours">00</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-block">
+                <span id="minutes">00</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-block">
+                <span id="seconds">00</span>
+                <p>Seconds</p>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>BBPS GRH Science Society is dedicated to fostering scientific curiosity and innovation among students.</p>
+            </div>
+
+             <div class="footer-section">
+                 <h3>Quick Links</h3>
+                 <ul>
+                     <li><a href="/index.html">Home</a></li>
+                     <li><a href="/events.html">Events</a></li>
+                     <li><a href="/contact.html">Contact</a></li>
+                     <li><a href="/innoverse.html">Innoverse</a></li>
+                 </ul>
+             </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/company/science_society/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/sciencesocietybbpsgr?igsh=dDQ3OHN5YnFzMXEw&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BBPS GRH Science Society | All Rights Reserved</p>
+            <p>Developers - Dheirya Kharbanda, Agamjot Singh Bindra</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Existing Scripts ---
+
+        // Modal functionality
+        const modal = document.getElementById('infoModal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        if (openModalBtn) {
+            openModalBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                closeModalFunction();
+            });
+        }
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalFunction();
+                }
+            });
+         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                closeModalFunction();
+            }
+        });
+
+        function closeModalFunction() {
+             if(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+             }
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        let isMenuOpen = false;
+
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                isMenuOpen = navLinks.classList.contains('active');
+                menuToggle.setAttribute('aria-expanded', isMenuOpen);
+                 document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+            });
+        }
+
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                     if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                     }
+                });
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (navLinks && navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                 navLinks.classList.remove('active');
+                 menuToggle.setAttribute('aria-expanded', 'false');
+                 document.body.style.overflow = '';
+            }
+        });
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+             if(scrollProgress) {
+                 const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                 const progress = totalHeight > 0 ? (window.pageYOffset / totalHeight) : 0;
+                 scrollProgress.style.transform = `scaleX(${progress})`;
+             }
+        });
+
+
+        // --- UPDATED Countdown Timer Script ---
+        const countdownDate = new Date("May 15, 2025 00:00:00").getTime(); // Target date and time
+
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+        const countdownTimerElement = document.getElementById('countdownTimer');
+        const countdownHeadingElement = document.getElementById('countdown-heading');
+
+        // Check if all elements exist before starting the interval
+        if (daysElement && hoursElement && minutesElement && secondsElement && countdownTimerElement && countdownHeadingElement) {
+             // Use a variable for the interval so we can clear it
+            let countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const difference = countdownDate - now; // Difference in milliseconds
+
+                if (difference <= 0) {
+                    // Countdown finished
+                    clearInterval(countdownInterval); // Stop the timer
+                    countdownHeadingElement.innerHTML = "Innoverse 2025 Has Ended!";
+                    countdownTimerElement.innerHTML = "<p style='font-size: 1.5rem; color: var(--accent-secondary); width: 100%;'>Results coming soon!</p>";
+
+                    // Optional: Ensure all counters show zero when stopped
+                    daysElement.textContent = "00";
+                    hoursElement.textContent = "00";
+                    minutesElement.textContent = "00";
+                    secondsElement.textContent = "00";
+                    return; // Exit the interval function
+                }
+
+                // Calculate time parts
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                // Update the HTML elements, adding leading zeros
+                daysElement.textContent = String(days).padStart(2, '0');
+                hoursElement.textContent = String(hours).padStart(2, '0');
+                minutesElement.textContent = String(minutes).padStart(2, '0');
+                secondsElement.textContent = String(seconds).padStart(2, '0');
+
+            }, 1000); // Update every 100 milliseconds for visible millisecond changes
+
+        } else {
+             console.error("Could not find all countdown timer elements!");
+        }
+        // --- END Countdown Timer Script ---
+
+    </script>
+</body>
+</html>
