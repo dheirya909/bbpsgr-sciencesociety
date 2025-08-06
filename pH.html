@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>pH Dataset Finder</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7f9;
+        text-align: center;
+        padding: 40px;
+    }
+    h1 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+    .input-box {
+        width: 80px;
+        padding: 10px;
+        margin: 10px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        text-align: center;
+    }
+    button {
+        padding: 12px 24px;
+        background: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #219150;
+    }
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #34495e;
+    }
+</style>
+</head>
+<body>
+
+<h1>pH Indicator</h1>
+
+<input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
+<input id="gValue" class="input-box" type="number" placeholder="G" min="0" max="255">
+<input id="bValue" class="input-box" type="number" placeholder="B" min="0" max="255">
+<br>
+<button onclick="findPH()">Find pH</button>
+
+<div id="result"></div>
+
+<script>
+let dataset = [];
+
+// Fetch CSV from Vercel public folder
+const csvUrl = '/ph-data.csv';
+
+fetch(csvUrl)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error("Failed to load CSV");
+      }
+      return response.text();
+  })
+  .then(data => {
+      const rows = data.trim().split('\n');
+      rows.forEach((row, index) => {
+          if (index === 0) return; // Skip header row
+          const [b, g, r, pH] = row.split(',').map(v => v.trim());
+          dataset.push({
+              pH: parseFloat(pH),
+              r: parseInt(r),
+              g: parseInt(g),
+              b: parseInt(b)
+          });
+      });
+  })
+  .catch(error => {
+      document.getElementById('result').innerText = "Error loading dataset.";
+      console.error(error);
+  });
+
+function findPH() {
+    const r = parseInt(document.getElementById('rValue').value);
+    const g = parseInt(document.getElementById('gValue').value);
+    const b = parseInt(document.getElementById('bValue').value);
+
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {
+        document.getElementById('result').innerText = "Please enter all RGB values.";
+        return;
+    }
+
+    let closest = null;
+    let minDist = Infinity;
+
+    dataset.forEach(item => {
+        const dist = Math.sqrt(
+            Math.pow(item.r - r, 2) +
+            Math.pow(item.g - g, 2) +
+            Math.pow(item.b - b, 2)
+        );
+        if (dist < minDist) {
+            minDist = dist;
+            closest = item;
+        }
+    });
+
+    if (closest) {
+        document.getElementById('result').innerText = `Estimated pH: ${closest.pH}`;
+    } else {
+        document.getElementById('result').innerText = "No match found.";
+    }
+}
+</script>
+
+</body>
+</html>
