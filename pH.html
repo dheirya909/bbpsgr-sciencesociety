@@ -89,6 +89,25 @@
         margin-top: 10px;
         transition: transform 0.2s ease;
     }
+    .hero-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 212, 0.3);
+        }
+
     button:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 255, 212, 0.4);
@@ -147,6 +166,7 @@
 
 <section class="ph-section">
     <h1>pH Indicator</h1>
+    <a href="/pH_Instructions.pdf" class="hero-button" id="openModal">Instructions</a>
     <input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
     <input id="gValue" class="input-box" type="number" placeholder="G" min="0" max="255">
     <input id="bValue" class="input-box" type="number" placeholder="B" min="0" max="255">
