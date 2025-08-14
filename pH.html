@@ -7,7 +7,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
 <style>
-    /* ---- All styles from index.html ---- */
     :root {
         --dark-bg: #121212;
         --dark-secondary: #1E1E1E;
@@ -20,7 +19,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--dark-bg); color: var(--dark-text); line-height: 1.6; overflow-x: hidden; }
 
-    /* Navbar styles from index.html */
     .navbar {
         background: rgba(30, 30, 30, 0.95);
         backdrop-filter: blur(10px);
@@ -46,10 +44,8 @@
     .dropdown a { color: var(--dark-text); padding: 0.75rem 1.5rem; display: block; text-decoration: none; }
     .dropdown a:hover { background: var(--dark-tertiary); color: var(--accent-color); padding-left: 2rem; }
 
-    /* Scroll progress bar */
     .scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent-color); transform-origin: 0%; transform: scaleX(0); z-index: 1001; }
 
-    /* pH Tool Section */
     .ph-section {
         min-height: 100vh;
         display: flex;
@@ -90,24 +86,22 @@
         transition: transform 0.2s ease;
     }
     .hero-button {
-            display: inline-block;
-            margin-bottom: 2rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
-            color: var(--dark-bg);
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .hero-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 212, 0.3);
-        }
-
+        display: inline-block;
+        margin-bottom: 2rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+        color: var(--dark-bg);
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: bold;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .hero-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 255, 212, 0.3);
+    }
     button:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 255, 212, 0.4);
@@ -119,7 +113,6 @@
         color: var(--accent-color);
     }
 
-    /* Footer from index.html */
     .footer { background: var(--dark-secondary); color: var(--dark-text); padding: 3rem 5%; text-align: center; border-top: 1px solid rgb(0, 255, 213); }
     .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; max-width: 1200px; margin: auto; }
     .footer-section { flex: 1; min-width: 250px; }
@@ -130,6 +123,49 @@
     .social-icons { display: flex; gap: 1rem; justify-content: center; }
     .social-icons a { color: var(--accent-color); font-size: 1.5rem; }
     .footer-bottom { margin-top: 2rem; font-size: 0.9rem; opacity: 0.8; }
+
+/* Hide default file input */
+#imageUpload {
+    display: none;
+}
+
+/* Upload button style */
+.upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 24px;
+    background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+    color: var(--dark-bg);
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.upload-label:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 255, 212, 0.4);
+}
+.upload-label i {
+    font-size: 1.2rem;
+}
+
+/* Image preview container */
+.image-preview-container {
+    margin-top: 1.5rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 12px;
+    padding: 10px;
+    display: inline-block;
+    background: var(--dark-secondary);
+    box-shadow: 0 0 15px rgba(0, 255, 212, 0.3);
+}
+.image-preview-container img {
+    max-width: 250px;
+    border-radius: 8px;
+}
+
+
 </style>
 </head>
 <body>
@@ -166,7 +202,21 @@
 
 <section class="ph-section">
     <h1>pH Indicator</h1>
-    <a href="/pH_Instructions.pdf" class="hero-button" id="openModal">Instructions</a>
+    <a href="/pH_Instructions.pdf" target="_blank" class="hero-button" id="openModal">Instructions</a>
+
+    <!-- Upload button -->
+<label for="imageUpload" class="upload-label">
+    <i class="fas fa-upload"></i> Upload Image
+</label>
+<input type="file" id="imageUpload" accept="image/*">
+
+<!-- Image preview -->
+<div id="imagePreviewContainer" class="image-preview-container" style="display:none;">
+    <img id="imagePreview" alt="Preview">
+</div>
+<canvas id="hiddenCanvas" style="display:none;"></canvas>
+
+
     <input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
     <input id="gValue" class="input-box" type="number" placeholder="G" min="0" max="255">
     <input id="bValue" class="input-box" type="number" placeholder="B" min="0" max="255">
@@ -198,6 +248,7 @@
 let dataset = [];
 const csvUrl = '/ph-data.csv';
 
+// Load CSV dataset
 fetch(csvUrl)
   .then(response => {
       if (!response.ok) throw new Error("Failed to load CSV");
@@ -216,6 +267,40 @@ fetch(csvUrl)
       console.error(error);
   });
 
+// Image upload and RGB extraction
+document.getElementById('imageUpload').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.getElementById('hiddenCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        const centerX = Math.floor(img.width / 2);
+        const centerY = Math.floor(img.height / 2);
+        const pixel = ctx.getImageData(centerX, centerY, 1, 1).data;
+
+        document.getElementById('rValue').value = pixel[0];
+        document.getElementById('gValue').value = pixel[1];
+        document.getElementById('bValue').value = pixel[2];
+
+        document.getElementById('result').innerText =
+            `Center RGB: R=${pixel[0]}, G=${pixel[1]}, B=${pixel[2]}`;
+    };
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        img.src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+// pH Finder
 function findPH() {
     const r = parseInt(document.getElementById('rValue').value);
     const g = parseInt(document.getElementById('gValue').value);
