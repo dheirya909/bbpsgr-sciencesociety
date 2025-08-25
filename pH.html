@@ -213,9 +213,8 @@
 
 <!-- Image preview -->
 <div id="imagePreviewContainer" class="image-preview-container" style="display:none;">
-    <img id="imagePreview" alt="Preview">
+    <canvas id="previewCanvas"></canvas>
 </div>
-<canvas id="hiddenCanvas" style="display:none;"></canvas>
 
 
     <input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
@@ -268,30 +267,94 @@ fetch(csvUrl)
       console.error(error);
   });
 
-// Image upload and RGB extraction
+// Image upload + click-to-select RGB + magnifier
 document.getElementById('imageUpload').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
 
     const img = new Image();
     img.onload = function() {
-        const canvas = document.getElementById('hiddenCanvas');
+        const canvas = document.getElementById('previewCanvas');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        // Resize canvas (fit in preview box, max 400px wide)
+        canvas.width = img.width > 400 ? 400 : img.width;
+        canvas.height = img.height * (canvas.width / img.width);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        const centerX = Math.floor(img.width / 2);
-        const centerY = Math.floor(img.height / 2);
-        const pixel = ctx.getImageData(centerX, centerY, 1, 1).data;
+        document.getElementById('imagePreviewContainer').style.display = "block";
 
-        document.getElementById('rValue').value = pixel[0];
-        document.getElementById('gValue').value = pixel[1];
-        document.getElementById('bValue').value = pixel[2];
+        // Reset selection state
+        let selectionMade = false;
 
-        document.getElementById('result').innerText =
-            `Center RGB: R=${pixel[0]}, G=${pixel[1]}, B=${pixel[2]}`;
+        // Create magnifier canvas
+        let magnifier = document.createElement('canvas');
+        magnifier.width = 100;
+        magnifier.height = 100;
+        magnifier.style.position = "absolute";
+        magnifier.style.border = "2px solid var(--accent-color)";
+        magnifier.style.borderRadius = "50%";
+        magnifier.style.pointerEvents = "none";
+        magnifier.style.display = "none";
+        magnifier.style.zIndex = "2000";
+        document.body.appendChild(magnifier);
+        const mCtx = magnifier.getContext('2d');
+
+        // Mouse move → show magnifier (only if no selection yet)
+        canvas.addEventListener('mousemove', function(event) {
+            if (selectionMade) return; // 🔹 stop showing if already selected
+
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const zoom = 5; // magnification factor
+            magnifier.style.left = event.pageX + 20 + "px";
+            magnifier.style.top = event.pageY + 20 + "px";
+            magnifier.style.display = "block";
+
+            mCtx.clearRect(0, 0, magnifier.width, magnifier.height);
+            mCtx.imageSmoothingEnabled = false;
+            mCtx.drawImage(
+                canvas,
+                x - magnifier.width / (2 * zoom),
+                y - magnifier.height / (2 * zoom),
+                magnifier.width / zoom,
+                magnifier.height / zoom,
+                0, 0,
+                magnifier.width,
+                magnifier.height
+            );
+        });
+
+        // Hide magnifier when leaving
+        canvas.addEventListener('mouseleave', function() {
+            if (!selectionMade) {
+                magnifier.style.display = "none";
+            }
+        });
+
+        // Click → pick pixel color + disable magnifier
+        canvas.addEventListener('click', function(event) {
+            if (selectionMade) return; // prevent multiple clicks
+
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+            document.getElementById('rValue').value = pixel[0];
+            document.getElementById('gValue').value = pixel[1];
+            document.getElementById('bValue').value = pixel[2];
+
+            document.getElementById('result').innerText =
+                `Selected RGB: R=${pixel[0]}, G=${pixel[1]}, B=${pixel[2]}`;
+
+            // 🔹 Hide magnifier permanently until a new image is uploaded
+            magnifier.style.display = "none";
+            selectionMade = true;
+        });
     };
 
     const reader = new FileReader();
@@ -322,6 +385,8 @@ window.addEventListener('scroll', () => {
     const progress = (window.pageYOffset / totalHeight) * 100;
     document.getElementById('scrollProgress').style.transform = `scaleX(${progress / 100})`;
 });
+
+
 </script>
 
 </body>
