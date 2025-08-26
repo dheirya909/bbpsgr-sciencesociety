@@ -30,6 +30,7 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid rgba(0, 255, 212, 0.1);
+        height: 80px;
     }
     .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
     .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent-color); transition: transform 0.3s ease; }
@@ -44,6 +45,16 @@
     .dropdown a { color: var(--dark-text); padding: 0.75rem 1.5rem; display: block; text-decoration: none; }
     .dropdown a:hover { background: var(--dark-tertiary); color: var(--accent-color); padding-left: 2rem; }
 
+    /* Mobile Navigation */
+    .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
     .scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent-color); transform-origin: 0%; transform: scaleX(0); z-index: 1001; }
 
     .ph-section {
@@ -51,8 +62,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 2rem;
+        padding-top: 100px;
         text-align: center;
     }
     .ph-section h1 {
@@ -60,21 +72,47 @@
         background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-top: 4rem;
+        margin-top: 2rem;
         margin-bottom: 2rem;
+        z-index: 1;
+        position: relative;
     }
+    
+    .input-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+    
     .input-box {
         width: 80px;
-        padding: 10px;
-        margin: 10px;
+        padding: 12px;
         border: 2px solid var(--accent-color);
         border-radius: 8px;
         font-size: 16px;
         text-align: center;
         background: var(--dark-secondary);
         color: var(--dark-text);
+        transition: all 0.3s ease;
     }
-    button {
+    
+    .input-box:focus {
+        outline: none;
+        box-shadow: 0 0 10px rgba(0, 255, 212, 0.3);
+        transform: scale(1.05);
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+    
+    button, .hero-button, .upload-label {
         padding: 12px 24px;
         background: linear-gradient(45deg, var(--accent-color), var(--hover-color));
         color: var(--dark-bg);
@@ -83,35 +121,102 @@
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
-        margin-top: 10px;
-        transition: transform 0.2s ease;
-    }
-    .hero-button {
-        display: inline-block;
-        margin-bottom: 2rem;
-        padding: 1rem 2rem;
-        background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
-        color: var(--dark-bg);
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
         text-decoration: none;
-        border-radius: 30px;
-        font-weight: bold;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: none;
-        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-width: 200px;
     }
-    .hero-button:hover {
+    
+    button:hover, .hero-button:hover, .upload-label:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 255, 212, 0.3);
+        box-shadow: 0 5px 20px rgba(0, 255, 212, 0.4);
     }
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 255, 212, 0.4);
+    
+    .outline-button {
+        background: transparent !important;
+        color: var(--accent-color) !important;
+        border: 2px solid var(--accent-color) !important;
     }
+    
+    .outline-button:hover {
+        background: var(--accent-color) !important;
+        color: var(--dark-bg) !important;
+    }
+    
     #result {
         margin-top: 20px;
         font-size: 18px;
         font-weight: bold;
         color: var(--accent-color);
+        padding: 1rem;
+        border-radius: 12px;
+        background: rgba(0, 255, 212, 0.1);
+        border: 1px solid rgba(0, 255, 212, 0.3);
+        max-width: 90%;
+        word-wrap: break-word;
+    }
+
+    /* Hide default file input */
+    #imageUpload {
+        display: none;
+    }
+
+    /* Image preview container */
+    .image-preview-container {
+        margin: 1.5rem 0;
+        border: 2px solid var(--accent-color);
+        border-radius: 12px;
+        padding: 15px;
+        background: var(--dark-secondary);
+        box-shadow: 0 0 15px rgba(0, 255, 212, 0.3);
+        position: relative;
+        max-width: 90vw;
+    }
+    
+    .canvas-container {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .image-preview-container canvas {
+        max-width: 100%;
+        border-radius: 8px;
+        cursor: crosshair;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .color-circle {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 3px solid var(--accent-color);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 255, 212, 0.2);
+        animation: pulse 2s infinite;
+        display: none;
+    }
+    
+    @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    
+    .mobile-helper {
+        display: none;
+        background: rgba(0, 255, 212, 0.1);
+        color: var(--accent-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        border: 1px solid rgba(0, 255, 212, 0.3);
     }
 
     .footer { background: var(--dark-secondary); color: var(--dark-text); padding: 3rem 5%; text-align: center; border-top: 1px solid rgb(0, 255, 213); }
@@ -125,48 +230,138 @@
     .social-icons a { color: var(--accent-color); font-size: 1.5rem; }
     .footer-bottom { margin-top: 2rem; font-size: 0.9rem; opacity: 0.8; }
 
-/* Hide default file input */
-#imageUpload {
-    display: none;
-}
-
-/* Upload button style */
-.upload-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 12px 24px;
-    background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
-    color: var(--dark-bg);
-    font-weight: bold;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-.upload-label:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(0, 255, 212, 0.4);
-}
-.upload-label i {
-    font-size: 1.2rem;
-}
-
-/* Image preview container */
-.image-preview-container {
-    margin-top: 1.5rem;
-    border: 2px solid var(--accent-color);
-    border-radius: 12px;
-    padding: 10px;
-    display: inline-block;
-    background: var(--dark-secondary);
-    box-shadow: 0 0 15px rgba(0, 255, 212, 0.3);
-}
-.image-preview-container img {
-    max-width: 250px;
-    border-radius: 8px;
-}
-
-
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 1rem 3%;
+        }
+        
+        .mobile-menu-toggle {
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: var(--dark-secondary);
+            flex-direction: column;
+            padding: 2rem 0;
+            gap: 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .nav-item {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .nav-item > a, .nav-item > p {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        .dropdown {
+            position: static;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            background: var(--dark-tertiary);
+            margin-top: 0;
+        }
+        
+        .ph-section {
+            padding: 1rem;
+            padding-top: 100px;
+        }
+        
+        .ph-section h1 {
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-container {
+            gap: 0.8rem;
+        }
+        
+        .input-box {
+            width: 90px;
+            padding: 14px;
+            font-size: 18px;
+        }
+        
+        .button-container {
+            width: 100%;
+        }
+        
+        button, .hero-button, .upload-label {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px 24px;
+            font-size: 18px;
+        }
+        
+        .mobile-helper {
+            display: block;
+        }
+        
+        .image-preview-container {
+            margin: 1rem 0;
+            padding: 10px;
+        }
+        
+        .color-circle {
+            width: 40px;
+            height: 40px;
+            border-width: 4px;
+        }
+        
+        #result {
+            font-size: 16px;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-container {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .footer-section {
+            min-width: auto;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .logo-text {
+            font-size: 1.2rem;
+        }
+        
+        .logo img {
+            width: 35px;
+            height: 35px;
+        }
+        
+        .ph-section h1 {
+            font-size: 2rem;
+        }
+        
+        .input-box {
+            width: 85px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .image-preview-container {
+            padding: 8px;
+        }
+    }
 </style>
 </head>
 <body>
@@ -178,7 +373,12 @@
         <img src="/logo.png" alt="Science Society Logo">
         <span class="logo-text">Science Society</span>
     </a>
-    <ul class="nav-links">
+    
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <ul class="nav-links" id="navLinks">
         <li class="nav-item"><a href="/index.html">Home</a></li>
         <li class="nav-item">
             <p>Events</p>
@@ -203,25 +403,44 @@
 
 <section class="ph-section">
     <h1>pH Indicator</h1>
-    <a href="/pH_Instructions.pdf" target="_blank" class="hero-button" id="openModal">Instructions</a>
+    
+    <div class="button-container">
+        <a href="/pH_Instructions.pdf" target="_blank" class="hero-button">
+            <i class="fas fa-file-pdf"></i> Instructions
+        </a>
 
-    <!-- Upload button -->
-<label for="imageUpload" class="upload-label">
-    <i class="fas fa-upload"></i> Upload Image
-</label>
-<input type="file" id="imageUpload" accept="image/*">
+        <label for="imageUpload" class="upload-label">
+            <i class="fas fa-upload"></i> Upload Image
+        </label>
+        <input type="file" id="imageUpload" accept="image/*">
+    </div>
 
-<!-- Image preview -->
-<div id="imagePreviewContainer" class="image-preview-container" style="display:none;">
-    <canvas id="previewCanvas"></canvas>
-</div>
+    <div id="imagePreviewContainer" class="image-preview-container" style="display:none;">
+        <div class="canvas-container">
+            <canvas id="previewCanvas"></canvas>
+            <div class="color-circle" id="colorCircle"></div>
+        </div>
+        <div class="mobile-helper">
+            <i class="fas fa-hand-pointer"></i> Tap on the image to select a color
+        </div>
+    </div>
 
-
-    <input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
-    <input id="gValue" class="input-box" type="number" placeholder="G" min="0" max="255">
-    <input id="bValue" class="input-box" type="number" placeholder="B" min="0" max="255">
-    <br>
-    <button onclick="findPH()">Find pH</button>
+    <div class="input-container">
+        <input id="rValue" class="input-box" type="number" placeholder="R" min="0" max="255">
+        <input id="gValue" class="input-box" type="number" placeholder="G" min="0" max="255">
+        <input id="bValue" class="input-box" type="number" placeholder="B" min="0" max="255">
+    </div>
+    
+    <div class="button-container">
+        <button onclick="findPH()">
+            <i class="fas fa-search"></i> Find pH
+        </button>
+        
+        <button class="outline-button" onclick="resetSelection()" id="resetBtn" style="display:none;">
+            <i class="fas fa-redo"></i> Upload New Image
+        </button>
+    </div>
+    
     <div id="result"></div>
 </section>
 
@@ -247,6 +466,8 @@
 <script>
 let dataset = [];
 const csvUrl = '/ph-data.csv';
+let magnifier = null;
+let selectionMade = false;
 
 // Load CSV dataset
 fetch(csvUrl)
@@ -267,116 +488,288 @@ fetch(csvUrl)
       console.error(error);
   });
 
-// Image upload + click-to-select RGB + magnifier
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+        navLinks.classList.remove('active');
+    }
+});
+
+// Image upload functionality
 document.getElementById('imageUpload').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
-
-    const img = new Image();
-    img.onload = function() {
-        const canvas = document.getElementById('previewCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Resize canvas (fit in preview box, max 400px wide)
-        canvas.width = img.width > 400 ? 400 : img.width;
-        canvas.height = img.height * (canvas.width / img.width);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        document.getElementById('imagePreviewContainer').style.display = "block";
-
-        // Reset selection state
-        let selectionMade = false;
-
-        // Create magnifier canvas
-        let magnifier = document.createElement('canvas');
-        magnifier.width = 100;
-        magnifier.height = 100;
-        magnifier.style.position = "absolute";
-        magnifier.style.border = "2px solid var(--accent-color)";
-        magnifier.style.borderRadius = "50%";
-        magnifier.style.pointerEvents = "none";
-        magnifier.style.display = "none";
-        magnifier.style.zIndex = "2000";
-        document.body.appendChild(magnifier);
-        const mCtx = magnifier.getContext('2d');
-
-        // Mouse move → show magnifier (only if no selection yet)
-        canvas.addEventListener('mousemove', function(event) {
-            if (selectionMade) return; // 🔹 stop showing if already selected
-
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            const zoom = 5; // magnification factor
-            magnifier.style.left = event.pageX + 20 + "px";
-            magnifier.style.top = event.pageY + 20 + "px";
-            magnifier.style.display = "block";
-
-            mCtx.clearRect(0, 0, magnifier.width, magnifier.height);
-            mCtx.imageSmoothingEnabled = false;
-            mCtx.drawImage(
-                canvas,
-                x - magnifier.width / (2 * zoom),
-                y - magnifier.height / (2 * zoom),
-                magnifier.width / zoom,
-                magnifier.height / zoom,
-                0, 0,
-                magnifier.width,
-                magnifier.height
-            );
-        });
-
-        // Hide magnifier when leaving
-        canvas.addEventListener('mouseleave', function() {
-            if (!selectionMade) {
-                magnifier.style.display = "none";
-            }
-        });
-
-        // Click → pick pixel color + disable magnifier
-        canvas.addEventListener('click', function(event) {
-            if (selectionMade) return; // prevent multiple clicks
-
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            const pixel = ctx.getImageData(x, y, 1, 1).data;
-
-            document.getElementById('rValue').value = pixel[0];
-            document.getElementById('gValue').value = pixel[1];
-            document.getElementById('bValue').value = pixel[2];
-
-            document.getElementById('result').innerText =
-                `Selected RGB: R=${pixel[0]}, G=${pixel[1]}, B=${pixel[2]}`;
-
-            // 🔹 Hide magnifier permanently until a new image is uploaded
-            magnifier.style.display = "none";
-            selectionMade = true;
-        });
-    };
+    
+    console.log('File selected:', file.name); // Debug log
 
     const reader = new FileReader();
-    reader.onload = function(evt) {
-        img.src = evt.target.result;
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            console.log('Image loaded, dimensions:', img.width, 'x', img.height); // Debug log
+            
+            const canvas = document.getElementById('previewCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Calculate responsive canvas size
+            const maxWidth = window.innerWidth < 768 ? window.innerWidth - 80 : 500;
+            const maxHeight = window.innerWidth < 768 ? 400 : 600;
+            
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > maxWidth) {
+                height = (height * maxWidth) / width;
+                width = maxWidth;
+            }
+            if (height > maxHeight) {
+                width = (width * maxHeight) / height;
+                height = maxHeight;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            console.log('Canvas set to:', width, 'x', height); // Debug log
+            
+            document.getElementById('imagePreviewContainer').style.display = "block";
+            selectionMade = false;
+            
+            // Show reset button
+            document.getElementById('resetBtn').style.display = "inline-flex";
+
+            // Create or update magnifier
+            if (magnifier && magnifier.parentNode) {
+                document.body.removeChild(magnifier);
+            }
+            
+            magnifier = document.createElement('canvas');
+            magnifier.width = 120;
+            magnifier.height = 120;
+            magnifier.style.position = "fixed";
+            magnifier.style.border = "3px solid #00FFD4";
+            magnifier.style.borderRadius = "50%";
+            magnifier.style.pointerEvents = "none";
+            magnifier.style.display = "none";
+            magnifier.style.zIndex = "2000";
+            magnifier.style.boxShadow = "0 0 20px rgba(0, 255, 212, 0.5)";
+            document.body.appendChild(magnifier);
+            const mCtx = magnifier.getContext('2d');
+
+            // Mouse/touch move → show magnifier (only if no selection yet)
+            function showMagnifier(x, y, pageX, pageY) {
+                if (selectionMade || !magnifier) return;
+                
+                const zoom = 4;
+                magnifier.style.left = (pageX + 20) + "px";
+                magnifier.style.top = (pageY + 20) + "px";
+                magnifier.style.display = "block";
+
+                mCtx.clearRect(0, 0, magnifier.width, magnifier.height);
+                mCtx.imageSmoothingEnabled = false;
+                mCtx.drawImage(
+                    canvas,
+                    x - magnifier.width / (2 * zoom),
+                    y - magnifier.height / (2 * zoom),
+                    magnifier.width / zoom,
+                    magnifier.height / zoom,
+                    0, 0,
+                    magnifier.width,
+                    magnifier.height
+                );
+                
+                // Draw crosshair
+                mCtx.strokeStyle = "#00FFD4";
+                mCtx.lineWidth = 2;
+                mCtx.beginPath();
+                mCtx.moveTo(magnifier.width/2 - 10, magnifier.height/2);
+                mCtx.lineTo(magnifier.width/2 + 10, magnifier.height/2);
+                mCtx.moveTo(magnifier.width/2, magnifier.height/2 - 10);
+                mCtx.lineTo(magnifier.width/2, magnifier.height/2 + 10);
+                mCtx.stroke();
+            }
+
+            // Mouse events for desktop
+            canvas.addEventListener('mousemove', function(event) {
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                showMagnifier(x, y, event.pageX, event.pageY);
+            });
+
+            // Touch events for mobile
+            canvas.addEventListener('touchmove', function(event) {
+                event.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = event.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                showMagnifier(x, y, touch.pageX, touch.pageY);
+            }, { passive: false });
+
+            // Hide magnifier when leaving
+            canvas.addEventListener('mouseleave', function() {
+                if (!selectionMade && magnifier) {
+                    magnifier.style.display = "none";
+                }
+            });
+
+            canvas.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    if (!selectionMade && magnifier) {
+                        magnifier.style.display = "none";
+                    }
+                }, 100);
+            });
+
+            // Click/Touch → pick pixel color
+            function selectColor(x, y) {
+                if (selectionMade) return;
+
+                const pixel = ctx.getImageData(Math.floor(x), Math.floor(y), 1, 1).data;
+
+                document.getElementById('rValue').value = pixel[0];
+                document.getElementById('gValue').value = pixel[1];
+                document.getElementById('bValue').value = pixel[2];
+
+                document.getElementById('result').innerHTML = `
+                    <i class="fas fa-palette"></i> Selected RGB: R=${pixel[0]}, G=${pixel[1]}, B=${pixel[2]}
+                `;
+
+                // Show color circle at selection point
+                const colorCircle = document.getElementById('colorCircle');
+                colorCircle.style.left = x + 'px';
+                colorCircle.style.top = y + 'px';
+                colorCircle.style.display = 'block';
+
+                // Hide magnifier and image after selection
+                if (magnifier) {
+                    magnifier.style.display = "none";
+                }
+                
+                // Hide the image preview after a short delay
+                setTimeout(() => {
+                    document.getElementById('imagePreviewContainer').style.display = "none";
+                }, 2000);
+                
+                selectionMade = true;
+            }
+
+            // Click event
+            canvas.addEventListener('click', function(event) {
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                selectColor(x, y);
+            });
+
+            // Touch event
+            canvas.addEventListener('touchstart', function(event) {
+                event.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = event.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                selectColor(x, y);
+            }, { passive: false });
+        };
+        
+        img.onerror = function() {
+            console.error('Failed to load image');
+            document.getElementById('result').innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i> Failed to load image. Please try again.
+            `;
+        };
+        
+        img.src = event.target.result;
     };
+    
+    reader.onerror = function() {
+        console.error('Failed to read file');
+        document.getElementById('result').innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i> Failed to read file. Please try again.
+        `;
+    };
+    
     reader.readAsDataURL(file);
 });
+
+// Reset selection function
+function resetSelection() {
+    selectionMade = false;
+    document.getElementById('imagePreviewContainer').style.display = "none";
+    document.getElementById('colorCircle').style.display = "none";
+    document.getElementById('resetBtn').style.display = "none";
+    document.getElementById('rValue').value = "";
+    document.getElementById('gValue').value = "";
+    document.getElementById('bValue').value = "";
+    document.getElementById('result').innerText = "";
+    document.getElementById('imageUpload').value = "";
+    
+    if (magnifier) {
+        document.body.removeChild(magnifier);
+        magnifier = null;
+    }
+}
 
 // pH Finder
 function findPH() {
     const r = parseInt(document.getElementById('rValue').value);
     const g = parseInt(document.getElementById('gValue').value);
     const b = parseInt(document.getElementById('bValue').value);
-    if (isNaN(r) || isNaN(g) || isNaN(b)) return document.getElementById('result').innerText = "Please enter all RGB values.";
-    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) return document.getElementById('result').innerText = "RGB values must be between 0 and 255.";
+    
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {
+        document.getElementById('result').innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i> Please enter all RGB values or select a color from an image.
+        `;
+        return;
+    }
+    
+    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
+        document.getElementById('result').innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i> RGB values must be between 0 and 255.
+        `;
+        return;
+    }
+    
     let closest = null, minDist = Infinity;
     dataset.forEach(item => {
         const dist = Math.sqrt(Math.pow(item.r - r, 2) + Math.pow(item.g - g, 2) + Math.pow(item.b - b, 2));
-        if (dist < minDist) { minDist = dist; closest = item; }
+        if (dist < minDist) { 
+            minDist = dist; 
+            closest = item; 
+        }
     });
-    document.getElementById('result').innerText = closest ? `Estimated pH: ${closest.pH}` : "No match found.";
+    
+    if (closest) {
+        let phCategory = "";
+        if (closest.pH < 7) {
+            phCategory = "Acidic";
+        } else if (closest.pH > 7) {
+            phCategory = "Basic";
+        } else {
+            phCategory = "Neutral";
+        }
+        
+        document.getElementById('result').innerHTML = `
+            <i class="fas fa-flask"></i> <strong>Estimated pH: ${closest.pH}</strong><br>
+            <small>Classification: ${phCategory} | RGB: (${r}, ${g}, ${b})</small>
+        `;
+    } else {
+        document.getElementById('result').innerHTML = `
+            <i class="fas fa-times-circle"></i> No match found in dataset.
+        `;
+    }
 }
 
 // Scroll Progress
@@ -386,7 +779,12 @@ window.addEventListener('scroll', () => {
     document.getElementById('scrollProgress').style.transform = `scaleX(${progress / 100})`;
 });
 
-
+// Cleanup magnifier on page unload
+window.addEventListener('beforeunload', () => {
+    if (magnifier && magnifier.parentNode) {
+        document.body.removeChild(magnifier);
+    }
+});
 </script>
 
 </body>
