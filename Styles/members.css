@@ -1,0 +1,110 @@
+/* Root Variables */
+        :root {
+            --dark-bg: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-tertiary: #2C2C2C;
+            --dark-text: #E0E0E0;
+            --accent-color: #00FFD4;
+            --accent-secondary: #FF6B6B;
+            --hover-color: #00B4A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            touch-action: manipulation;
+        }
+
+        /* Container */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 50px auto 0;
+        }
+
+        .card {
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            padding-top: 120%; /* Maintain aspect ratio */
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--dark-secondary);
+            color: var(--dark-text);
+            text-align: center;
+            overflow: hidden; /* Fix for overflowing content */
+        }
+
+        .card-back {
+            background-color: var(--dark-tertiary);
+            color: var(--accent-color);
+            transform: rotateY(180deg);
+            padding: 20px;
+        }
+
+        .card-back h2 {
+            font-weight: lighter;
+        }
+
+        .card-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .card-front h3 {
+            font-size: 1.6rem;
+            font-weight: lighter;
+            color: var(--accent-color);
+        }
+
+        .card-front p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: var(--dark-text);
+        }

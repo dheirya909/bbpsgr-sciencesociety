@@ -5,435 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Media Page</title>
-    <style>
-        /* Root Variables */
-        :root {
-            --dark-bg: #121212;
-            --dark-secondary: #1E1E1E;
-            --dark-tertiary: #2C2C2C;
-            --dark-text: #E0E0E0;
-            --accent-color: #00FFD4;
-            --accent-secondary: #FF6B6B;
-            --hover-color: #00B4A6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
-            touch-action: manipulation;
-        }
-
-        .navbar {
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 255, 212, 0.1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-        }
-
-        .logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-color);
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: rotate(360deg);
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-item > a, .nav-item > p {
-            color: var(--dark-text);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-item > a:hover, .nav-item > p:hover {
-            color: var(--accent-color);
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-item:hover::after {
-            width: 100%;
-        }
-
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--dark-secondary);
-            min-width: 200px;
-            border-radius: 8px;
-            padding: 0.5rem 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            list-style-type: none;
-        }
-
-        .nav-item:hover .dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown a {
-            color: var(--dark-text);
-            padding: 0.75rem 1.5rem;
-            display: block;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown a:hover {
-            background: var(--dark-tertiary);
-            color: var(--accent-color);
-            padding-left: 2rem;
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        .menu-toggle span {
-            width: 30px;
-            height: 2px;
-            background: var(--accent-color);
-            transition: 0.4s;
-        }
-
-        @media screen and (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 80%;
-                max-width: 400px;
-                background: var(--dark-bg);
-                flex-direction: column;
-                padding: 6rem 2rem;
-                transition: 0.3s ease;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .dropdown {
-                position: static;
-                background: transparent;
-                box-shadow: none;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                display: none;
-            }
-
-            .nav-item:hover .dropdown {
-                display: block;
-            }
-        }
-
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 100px auto 0;
-            margin-left: 200px;
-            margin-right: 200px;
-            justify-content: center;
-        }
-
-        .gallery img {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .gallery img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal img {
-            max-width: 80%;
-            max-height: 80%;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .modal img:hover {
-            transform: scale(1.05);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0);
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-
-            .gallery {
-                margin-left: 10px;
-                margin-right: 10px;
-            }
-
-            .gallery img {
-                width: 150px;
-                height: 110px;
-            }
-
-            .modal img {
-                max-width: 90%;
-                max-height: 90%;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            .gallery {
-                margin-left: 50px;
-                margin-right: 50px;
-            }
-
-            .gallery img {
-                width: 120px;
-                height: 90px;
-            }
-
-            .modal img {
-                max-width: 95%;
-                max-height: 95%;
-            }
-        }
-
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-color);
-            transform-origin: 0%;
-            transform: scaleX(0);
-            z-index: 1001;
-        }
-
-        .footer {
-            background: var(--dark-secondary);
-            color: var(--dark-text);
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid rgb(0, 255, 213);
-            margin-top: 100px;
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-section h3 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: var(--dark-text);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent-color);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .social-icons a {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--hover-color);
-        }
-
-        .footer-bottom {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-    </style>
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/Styles/common.css">
+    <link rel="stylesheet" href="Styles/media.css">
 </head>
     <body>
 
         <div class="scroll-progress" id="scrollProgress"></div>
 
-        <nav class="navbar">
-            <a href="#" class="logo">
-                <img src="/logo.png" alt="Science Society Logo">
-                <span class="logo-text">Science Society</span>
-            </a>
-            
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-    
-            <ul class="nav-links">
-                <li class="nav-item"><a href="/index.html">Home</a></li>
-                <li class="nav-item">
-                    <p>Events</p>
-                    <ul class="dropdown">
-                        <li><a href="/events.html">Events</a></li>
-                        <li><a href="/media.html">Media</a></li>
-                        <li><a href="/results/results.html">Results</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <p>Members</p>
-                    <ul class="dropdown">
-                        <li><a href="/members/ob.html">Office Bearers</a></li>
-                        <li><a href="/members/teachers.html">Teachers Incharge</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a href="/contact.html">Contact</a></li>
-                <li class="nav-item"><a href="/innoverse.html" style="color: #00B4A6;">Innoverse</a></li>
-            </ul>
-        </nav>
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="/logo.png" alt="Science Society Logo">
+            <span class="logo-text">Science Society</span>
+        </a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li class="nav-item"><a href="/index.html">Home</a></li>
+            <li class="nav-item">
+                <p>Events</p>
+                <ul class="dropdown">
+                    <li><a href="/events.html">Events</a></li>
+                    <li><a href="/media.html">Media</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <p>Members</p>
+                <ul class="dropdown">
+                    <li><a href="/members/ob.html">Office Bearers</a></li>
+                    <li><a href="/members/teachers.html">Teachers Incharge</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="/contact.html">Contact</a></li>
+            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
+        </ul>
+    </nav>
 
         <div class="gallery">
             <img src="/images/media/image1.png" alt="Image 1" onclick="openModal(this)">

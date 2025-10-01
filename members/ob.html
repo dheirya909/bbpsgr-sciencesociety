@@ -6,380 +6,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Office Bearers</title>
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
-    <style>
-        /* Root Variables */
-        :root {
-            --dark-bg: #121212;
-            --dark-secondary: #1E1E1E;
-            --dark-tertiary: #2C2C2C;
-            --dark-text: #E0E0E0;
-            --accent-color: #00FFD4;
-            --accent-secondary: #FF6B6B;
-            --hover-color: #00B4A6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
-            touch-action: manipulation;
-        }
-
-        .navbar {
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 255, 212, 0.1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-        }
-
-        .logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-color);
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: rotate(360deg);
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-item > a, .nav-item > p {
-            color: var(--dark-text);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-item > a:hover, .nav-item > p:hover {
-            color: var(--accent-color);
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-item:hover::after {
-            width: 100%;
-        }
-
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--dark-secondary);
-            min-width: 200px;
-            border-radius: 8px;
-            padding: 0.5rem 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            list-style-type: none;
-        }
-
-        .nav-item:hover .dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown a {
-            color: var(--dark-text);
-            padding: 0.75rem 1.5rem;
-            display: block;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown a:hover {
-            background: var(--dark-tertiary);
-            color: var(--accent-color);
-            padding-left: 2rem;
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        .menu-toggle span {
-            width: 30px;
-            height: 2px;
-            background: var(--accent-color);
-            transition: 0.4s;
-        }
-
-        @media screen and (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 80%;
-                max-width: 400px;
-                background: var(--dark-bg);
-                flex-direction: column;
-                padding: 6rem 2rem;
-                transition: 0.3s ease;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .dropdown {
-                position: static;
-                background: transparent;
-                box-shadow: none;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                display: none;
-            }
-
-            .nav-item:hover .dropdown {
-                display: block;
-            }
-
-            .heading {
-                font-weight: lighter;
-            }
-        }
-
-
-        /* Container */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            max-width: 1400px;
-            margin: 50px auto 0;
-        }
-
-        .card {
-            perspective: 1000px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            padding-top: 120%; /* Maintain aspect ratio */
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-        }
-
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background-color: var(--dark-secondary);
-            color: var(--dark-text);
-            text-align: center;
-            overflow: hidden; /* Fix for overflowing content */
-        }
-
-        .card-back {
-            background-color: var(--dark-tertiary);
-            color: var(--accent-color);
-            transform: rotateY(180deg);
-            padding: 20px;
-        }
-
-        .card-back h2 {
-            font-weight: lighter;
-        }
-
-        .card-front img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 2px solid var(--accent-color);
-        }
-
-        .card-front h3 {
-            font-size: 1.6rem;
-            font-weight: lighter;
-            color: var(--accent-color);
-        }
-
-        .card-front p {
-            margin: 5px 0;
-            font-size: 1rem;
-            color: var(--dark-text);
-        }
-
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-color);
-            transform-origin: 0;
-            transform: scaleX(0);
-            z-index: 1001;
-        }
-
-        .footer {
-            background: var(--dark-secondary);
-            color: var(--dark-text);
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid rgb(0, 255, 213);
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-section h3 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: var(--dark-text);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent-color);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .social-icons a {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--hover-color);
-        }
-
-        .footer-bottom {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="/Styles/common.css">
+    <link rel="stylesheet" href="/Styles/members.css">
 </head>
 <body>
 
@@ -391,20 +19,20 @@
             <span class="logo-text">Science Society</span>
         </a>
         
-        <div class="menu-toggle">
+        <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
             <span></span>
         </div>
 
-        <ul class="nav-links">
+        <ul class="nav-links" id="navLinks">
             <li class="nav-item"><a href="/index.html">Home</a></li>
             <li class="nav-item">
                 <p>Events</p>
                 <ul class="dropdown">
                     <li><a href="/events.html">Events</a></li>
                     <li><a href="/media.html">Media</a></li>
-                    <li><a href="/results/results.html">Results</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -415,7 +43,7 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/innoverse.html" style="color: #00B4A6;">Innoverse</a></li>
+            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
 
@@ -430,14 +58,14 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="/images/members/Prakhar.png" alt="President">
-                    <h3>Prakhar Dubey</h3>
+                    <img src="/images/members/dheirya.png" alt="President">
+                    <h3>Dheirya kharbanda</h3>
                     <p style="margin: 20px; color: white; font-weight: bolder;">President</p>
                 </div>
                 <div class="card-back">
-                    <h2>Prakhar Dubey</h2>
-                    <p style="margin: 20px; color: white;">As founding science society president, he champions innovation with experience at Microsoft, IBM, and a passion for quantum computing.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;" class="heading">Class 12-C</p>
+                    <h2>Dheirya Kharbanda</h2>
+                    <p style="margin: 20px; color: white;">Curious and driven, Dheirya leads initiatives in physics, tech, and community building.</p>
+                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;" class="heading">Class 11-D</p>
                 </div>
             </div>
         </div>
@@ -445,46 +73,14 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="/images/members/somya.jpg" alt="President">
-                    <h3>Somya Gupta</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">President</p>
-                </div>
-                <div class="card-back">
-                    <h2>Somya Gupta</h2>
-                    <p style="margin: 20px; color: white;">She is a creative, innovative and enthusiastic individual who aims to ignite a curiosity and inspire a love for science in everyone. </p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-D</p>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/aarav.jpg" alt="Vice President">
+                    <img src="/images/members/aarav.jpg" alt="President">
                     <h3>Aarav Parashar</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Vice President</p>
+                    <p style="margin: 20px; color: white; font-weight: bolder;">President</p>
                 </div>
                 <div class="card-back">
                     <h2>Aarav Parashar</h2>
-                    <p style="margin: 20px; color: white;">A dedicated member of the science society, with a passion for science and a commitment to inspiring peers, He looks forward to leading exciting projects and initiatives.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 11-C</p>
-
-                </div>
-            </div>
-        </div> 
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/naman.jpg" alt="Vice President">
-                    <h3>Naman Goel</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Vice President</p>
-                </div>
-                <div class="card-back">
-                    <h2>Naman Goel</h2>
-                    <p style="margin: 20px; color: white;">An avid thinker fueled by a love for technology, he's constantly seeking new challenges to solve and innovate at the edge of discovery.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-D</p>
+                    <p style="margin: 20px; color: white;">Curious and driven, Dheirya leads initiatives in physics, tech, and community building.</p>
+                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;" class="heading">Class 11-C</p>
                 </div>
             </div>
         </div>
@@ -492,104 +88,14 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                <img src="/images/members/atharva.jpg" alt="Ideator">
-                <h3>Atharva Keswani</h3>
-                <p style="margin: 20px; color: white; font-weight: bolder;">Ideator</p>
+                    <img src="/images/members/atharva.jpg" alt="President">
+                    <h3>Atharva Keswani</h3>
+                    <p style="margin: 20px; color: white; font-weight: bolder;">President</p>
                 </div>
                 <div class="card-back">
-                    <h2> Atharva keswani </h2>
-                    <p style="margin: 20px; color: white;">With a knack for problem-solving and a curiosity that knows no bounds, he dives into every project with energy and excitement.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 11-C</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                <img src="/images/members/palak.jpg" alt="Ideator">
-                <h3>Palak</h3>
-                <p style="margin: 20px; color: white; font-weight: bolder;">Ideator</p>
-                </div>
-                <div class="card-back">
-                    <h2> Palak </h2>
-                    <p style="margin: 20px; color: white;">she stands out as a passionate member of the science society. Her bright smile and eager attitude draw others in, making her a natural leader.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-C</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/kritynidhi.jpg" alt="Ideator">
-                    <h3>Krityanidhi Chawla</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Ideator</p>
-                </div>
-                <div class="card-back">
-                    <h2> Krityanidhi Chawla </h2>
-                    <p style="margin: 20px; color: white;">She combines her love for knowledge with a flair for writing, art, and innovation. Alongside her academic pursuits she brings fresh ideas and enthusiasm to every project she undertakes with an aim to inspire her peers and create a lasting impact.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-D</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/sakshai.jpg" alt="IT Head">
-                    <h3>Saksham Jain</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">IT Head</p>
-                </div>
-                <div class="card-back">
-                    <h2> Saksham Jain </h2>
-                    <p style="margin: 20px; color: white;">Known for his enthusiasm and inventive spirit, he believes in the importance of inspiring the next generation of scientists and engineers.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-D</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/dheirya.png" alt="IT Head">
-                    <h3>Dheirya Kharbanda</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Main Website Developer</p>
-                </div>
-                <div class="card-back">
-                    <h2> Dheirya Kharbanda </h2>
-                    <p style="margin: 20px; color: white;">Fueled by a love of web technologies like HTML and CSS, he is the main developer of this website</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 11-D</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/agam.jpg" alt="IT Head">
-                    <h3>Agamjot Singh Bindra </h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Main Website Developer</p>
-                </div>
-                <div class="card-back">
-                    <h2> Agamjot Singh Bindra </h2>
-                    <p style="margin: 20px; color: white;">Fueled by a love of web technologies like JavaScript and TypeScript, He is one of the main developers of this website</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 11-D</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="/images/members/kanav.png" alt="IT Head">
-                    <h3>Kanav Goel </h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Website Developer</p>
-                </div>
-                <div class="card-back">
-                    <h2> Kanav Goel </h2>
-                    <p style="margin: 20px; color: white;">Driven by a passion towards science, he is always armed with a notebook full of ideas, often sparking engaging discussions and ideas.</p>
-                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;">Class 12-D</p>
+                    <h2>Atharva Keswani</h2>
+                    <p style="margin: 20px; color: white;">Curious and driven, Dheirya leads initiatives in physics, tech, and community building.</p>
+                    <p style="padding: 10px; border-radius: 20px; background-color: #00b4a558; color: white;" class="heading">Class 11-C</p>
                 </div>
             </div>
         </div>

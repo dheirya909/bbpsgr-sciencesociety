@@ -1,0 +1,184 @@
+        :root {
+    --dark-bg: #121212;
+    --dark-secondary: #1E1E1E;
+    --dark-tertiary: #2C2C2C;
+    --dark-text: #E0E0E0;
+    --accent-color: #00FFD4;
+    --accent-secondary: #FF6B6B;
+    --hover-color: #00B4A6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+/* Enhanced Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5%;
+    padding-top: 80px;
+    position: relative;
+    background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)),
+                url('/images/innoverse.png') no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.05;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.hero-content {
+    background: rgba(30, 30, 30, 0.067);
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+    border: 4px solid rgba(0, 255, 212, 0.1);
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    opacity: 0.9;
+}
+
+/* Enhanced Science Grid */
+.science-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 5rem 5%;
+    background: linear-gradient(to bottom, var(--dark-bg), var(--dark-secondary));
+}
+
+.science-card {
+    background: var(--dark-secondary);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 255, 212, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.science-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(0, 255, 212, 0.1));
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.science-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+}
+
+.science-card:hover::before {
+    transform: translateX(0);
+}
+
+.science-card i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.science-card:hover i {
+    transform: scale(1.2);
+}
+
+.science-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.science-card p {
+    color: var(--dark-text);
+    opacity: 0.8;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .hero {
+        min-height: calc(100vh - 80px);
+    }
+
+    .hero-content {
+        padding: 2rem;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

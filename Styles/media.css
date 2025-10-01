@@ -1,0 +1,130 @@
+       /* Root Variables */
+        :root {
+            --dark-bg: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-tertiary: #2C2C2C;
+            --dark-text: #E0E0E0;
+            --accent-color: #00FFD4;
+            --accent-secondary: #FF6B6B;
+            --hover-color: #00B4A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            touch-action: manipulation;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 100px auto 0;
+            margin-left: 200px;
+            margin-right: 200px;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .modal img:hover {
+            transform: scale(1.05);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+
+            .gallery {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .gallery img {
+                width: 150px;
+                height: 110px;
+            }
+
+            .modal img {
+                max-width: 90%;
+                max-height: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .gallery {
+                margin-left: 50px;
+                margin-right: 50px;
+            }
+
+            .gallery img {
+                width: 120px;
+                height: 90px;
+            }
+
+            .modal img {
+                max-width: 95%;
+                max-height: 95%;
+            }
+        }
