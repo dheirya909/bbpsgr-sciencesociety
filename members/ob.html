@@ -7,7 +7,105 @@
     <title>Office Bearers</title>
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/Styles/common.css">
-    <link rel="stylesheet" href="/Styles/members.css">
+    <style>
+        /* Root Variables */
+        :root {
+            --dark-bg: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-tertiary: #2C2C2C;
+            --dark-text: #E0E0E0;
+            --accent-color: #00FFD4;
+            --accent-secondary: #FF6B6B;
+            --hover-color: #00B4A6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            touch-action: manipulation;
+        }
+        /* Container */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            width: 100%;
+            aspect-ratio: 2/3;
+            perspective: 1000px;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            padding-top: 120%; /* Maintain aspect ratio */
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--dark-secondary);
+            color: var(--dark-text);
+            text-align: center;
+            overflow: hidden;
+        }
+        .card-back {
+            background-color: var(--dark-tertiary);
+            color: var(--accent-color);
+            transform: rotateY(180deg);
+            padding: 20px;
+        }
+        .card-back h2 {
+            font-weight: lighter;
+        }
+        .card-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-color);
+        }
+        .card-front h3 {
+            font-size: 1.6rem;
+            font-weight: lighter;
+            color: var(--accent-color);
+        }
+        .card-front p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: var(--dark-text);
+        }
+    </style>
 </head>
 <body>
 
@@ -50,16 +148,15 @@
     <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);" class="heading">Our Team Members</h1>
     <p style="text-align: center;" class="heading">Meet the dedicated individuals who make up the BBPS Science Society. Click on the cards to learn more about each member.</p>
 
-    <!-- Container -->
+    <!-- Container - ALL CARDS IN ONE CONTAINER -->
     <div class="container">
-
         
-        <!-- Card 1 -->
+        <!-- Card 1 - Dheirya -->
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="/images/members/dheirya.png" alt="President">
-                    <h3>Dheirya kharbanda</h3>
+                    <h3>Dheirya Kharbanda</h3>
                     <p style="margin: 20px; color: white; font-weight: bolder;">President</p>
                 </div>
                 <div class="card-back">
@@ -70,6 +167,7 @@
             </div>
         </div>
 
+        <!-- Card 2 - Aarav -->
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
@@ -85,6 +183,7 @@
             </div>
         </div>
 
+        <!-- Card 3 - Atharva -->
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
@@ -99,9 +198,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-          <div class="card">
+
+        <!-- Card 4 - Shlok -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="IT Head">
@@ -116,7 +215,8 @@
             </div>
         </div>
 
-          <div class="card">
+        <!-- Card 5 - Manan -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="IT Head">
@@ -130,9 +230,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
-      <div class="card">
+        <!-- Card 6 - Aarna -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="Editorial Head">
@@ -146,9 +246,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-     <div class="card">
+
+        <!-- Card 7 - Medha -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="Editorial Head">
@@ -162,9 +262,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
+        <!-- Card 8 - Tanveer -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="Ideator">
@@ -178,9 +278,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
+        <!-- Card 9 - Vaibhav -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
                     <img src="" alt="Ideator">
@@ -194,14 +294,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
-     <div class="card">
+        <!-- Card 10 - Ridhima -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="" alt="Olymipiad Incharge">
+                    <img src="" alt="Olympiad Incharge">
                     <h3>Ridhima Sood</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Olymipiad Incharge</p>
+                    <p style="margin: 20px; color: white; font-weight: bolder;">Olympiad Incharge</p>
                 </div>
                 <div class="card-back">
                     <h2>Ridhima Sood</h2>
@@ -210,14 +310,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
+        <!-- Card 11 - Daksh -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="" alt="Olymipiad Incharge">
+                    <img src="" alt="Olympiad Incharge">
                     <h3>Daksh Singh</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Olymipiad Incharge</p>
+                    <p style="margin: 20px; color: white; font-weight: bolder;">Olympiad Incharge</p>
                 </div>
                 <div class="card-back">
                     <h2>Daksh Singh</h2>
@@ -226,14 +326,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
+        <!-- Card 12 - Raunak -->
+        <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="" alt="Olymipiad Incharge">
+                    <img src="" alt="Olympiad Incharge">
                     <h3>Raunak Jatana</h3>
-                    <p style="margin: 20px; color: white; font-weight: bolder;">Olymipiad Incharge</p>
+                    <p style="margin: 20px; color: white; font-weight: bolder;">Olympiad Incharge</p>
                 </div>
                 <div class="card-back">
                     <h2>Raunak Jatana</h2>
@@ -242,8 +342,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
+    <!-- Container closes HERE - after all cards -->
 
     <footer class="footer">
         <div class="footer-container">
@@ -265,8 +366,6 @@
             <p>Developers - Dheirya Kharbanda, Agamjot Singh Bindra</p>
         </div>
     </footer>
-
-        
 
     <script>
         // Mobile Menu Toggle
@@ -302,17 +401,14 @@
         });
 
         document.querySelectorAll('.nav-item > p').forEach(item => {
-    item.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            e.preventDefault();
-            const parent = this.parentElement;
-            parent.classList.toggle('active');
-        }
-    });
-});
-
-
-        
+            item.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.classList.toggle('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
