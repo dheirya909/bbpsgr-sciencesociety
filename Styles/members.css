@@ -33,18 +33,18 @@
         /* Container */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            max-width: 1400px;
-            margin: 50px auto 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .card {
+            width: 100%;
+            aspect-ratio: 2/3;
             perspective: 1000px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+}
 
         .card-inner {
             position: relative;
