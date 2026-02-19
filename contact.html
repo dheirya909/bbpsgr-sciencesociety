@@ -43,7 +43,6 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
 
@@ -121,6 +120,14 @@
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.pageYOffset / totalHeight) * 100;
             scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+            // Navbar dynamic island effect
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         document.addEventListener('click', (e) => {

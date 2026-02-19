@@ -1,12 +1,12 @@
 /* Root Variables */
         :root {
-            --dark-bg: #121212;
-            --dark-secondary: #1E1E1E;
-            --dark-tertiary: #2C2C2C;
-            --dark-text: #E0E0E0;
-            --accent-color: #00FFD4;
-            --accent-secondary: #FF6B6B;
-            --hover-color: #00B4A6;
+            --dark-bg: #ffffff;
+            --dark-secondary: #f5f5f5;
+            --dark-tertiary: #eeeeee;
+            --dark-text: #1a1a1a;
+            --accent-color: #1a1a1a;
+            --accent-secondary: #1a1a1a;
+            --hover-color: #333333;
         }
 
         * {

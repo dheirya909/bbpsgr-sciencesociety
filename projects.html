@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Projects Page</title>
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/Styles/common.css">
+    <link rel="stylesheet" href="Styles/projects.css">
+</head>
+    <body>
+
+        <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="/logo.png" alt="Science Society Logo">
+            <span class="logo-text">Science Society</span>
+        </a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li class="nav-item"><a href="/index.html">Home</a></li>
+            <li class="nav-item">
+                <p>Events</p>
+                <ul class="dropdown">
+                    <li><a href="/events.html">Events</a></li>
+                    <li><a href="/media.html">Media</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <p>Members</p>
+                <ul class="dropdown">
+                    <li><a href="/members/ob.html">Office Bearers</a></li>
+                    <li><a href="/members/teachers.html">Teachers Incharge</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <h1 style="text-align: center; margin: 120px auto 20px; color: var(--accent-color); font-weight: 300; font-size: 3rem;">Student Projects</h1>
+    <p style="text-align: center; margin-bottom: 50px;" class="heading">Explore innovative projects created by our talented students</p>
+
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-flask"></i></div>
+                <h3>Water Purification System</h3>
+                <p><strong>By:</strong> Aarav & Priya | Class XII</p>
+                <p>A cost-effective water purification system using activated charcoal and sand filters, designed for rural communities.</p>
+                <span class="status">Completed</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-microscope"></i></div>
+                <h3>Plant Growth Study</h3>
+                <p><strong>By:</strong> Zara & Rohan | Class XI</p>
+                <p>Investigating the effects of different light wavelengths on plant photosynthesis and growth rates through controlled experiments.</p>
+                <span class="status">Completed</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-atom"></i></div>
+                <h3>Solar Panel Efficiency</h3>
+                <p><strong>By:</strong> Arjun & Meera | Class XII</p>
+                <p>Testing and optimizing solar panel efficiency under various weather conditions and angles of incidence.</p>
+                <span class="status">Completed</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-robot"></i></div>
+                <h3>Automated Robot Arm</h3>
+                <p><strong>By:</strong> Vivek & Sneha | Class XII</p>
+                <p>Building a programmable robotic arm using Arduino and servo motors for industrial automation tasks.</p>
+                <span class="status">Completed</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-code"></i></div>
+                <h3>Air Quality Monitoring</h3>
+                <p><strong>By:</strong> Ayushi & Karan | Class XI</p>
+                <p>IoT-based air quality monitoring system using sensors and real-time data visualization dashboard.</p>
+                <span class="status">Completed</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-globe"></i></div>
+                <h3>Biodiversity Mapping</h3>
+                <p><strong>By:</strong> Nisha & Aryan | Class XI</p>
+                <p>Comprehensive biodiversity assessment of the school campus with species documentation and conservation recommendations.</p>
+                <span class="status">Completed</span>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Have a Project to Showcase?</h2>
+            <p>Have you created an amazing science or technology project? We'd love to feature it on our projects page!</p>
+            <a href="/contact.html" class="cta-button">Submit Your Project</a>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>BBPS GRH Science Society is dedicated to fostering scientific curiosity and innovation among students.</p>
+                </div>
+    
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/company/science_society/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/sciencesocietybbpsgr?igsh=dDQ3OHN5YnFzMXEw&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BBPS GRH Science Society | All Rights Reserved</p>
+                <p>Developers - Dheirya Kharbanda, Agamjot Singh Bindra</p>
+            </div>
+        </footer>
+
+        <script>
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (event) => {
+                const isClickInsideMenu = navLinks.contains(event.target) || menuToggle.contains(event.target);
+                if (!isClickInsideMenu && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.nav-item > p').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const parent = this.parentElement;
+                        parent.classList.toggle('active');
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                const scrollProgress = document.getElementById('scrollProgress');
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (window.pageYOffset / totalHeight) * 100;
+                scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+                // Navbar dynamic island effect
+                const navbar = document.querySelector('.navbar');
+                if (window.pageYOffset > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        </script>
+
+    </body>
+</html>

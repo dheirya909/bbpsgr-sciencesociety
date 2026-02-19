@@ -10,13 +10,13 @@
     <style>
         /* Root Variables */
         :root {
-            --dark-bg: #121212;
-            --dark-secondary: #1E1E1E;
-            --dark-tertiary: #2C2C2C;
-            --dark-text: #E0E0E0;
-            --accent-color: #00FFD4;
-            --accent-secondary: #FF6B6B;
-            --hover-color: #00B4A6;
+            --dark-bg: #ffffff;
+            --dark-secondary: #f5f5f5;
+            --dark-tertiary: #eeeeee;
+            --dark-text: #1a1a1a;
+            --accent-color: #1a1a1a;
+            --accent-secondary: #1a1a1a;
+            --hover-color: #333333;
         }
         * {
             margin: 0;
@@ -141,11 +141,10 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
 
-    <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);" class="heading">Our Team Members</h1>
+    <h1 style="text-align: center; margin: 100px auto 0; color: #1a1a1a;" class="heading">Our Team Members</h1>
     <p style="text-align: center;" class="heading">Meet the dedicated individuals who make up the BBPS Science Society. Click on the cards to learn more about each member.</p>
 
     
@@ -334,6 +333,14 @@
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.pageYOffset / totalHeight) * 100;
             scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+            // Navbar dynamic island effect
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         // Close mobile menu when clicking outside

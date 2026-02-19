@@ -43,11 +43,10 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
 
-    <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);" class="heading">Our Teachers Incharge</h1>
+    <h1 style="text-align: center; margin: 100px auto 0; color: #1a1a1a;" class="heading">Our Teachers Incharge</h1>
     <p style="text-align: center; " class="heading">Meet the dedicated teachers incharge of the BBPS Science Society. Click on the cards to learn more about each Teacher.</p>
 
     <!-- Container -->
@@ -175,6 +174,14 @@
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.pageYOffset / totalHeight) * 100;
             scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+            // Navbar dynamic island effect
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         // Close mobile menu when clicking outside

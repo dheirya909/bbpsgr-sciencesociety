@@ -43,9 +43,11 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
+
+    <h1 style="text-align: center; margin: 120px auto 20px; color: var(--accent-color); font-weight: 300; font-size: 3rem;">Media Gallery</h1>
+    <p style="text-align: center; margin-bottom: 50px;" class="heading">Explore moments from our events and activities</p>
 
         <div class="gallery">
             <img src="/images/media/image1.png" alt="Image 1" onclick="openModal(this)">
@@ -137,6 +139,14 @@
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.pageYOffset / totalHeight) * 100;
             scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+            // Navbar dynamic island effect
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
         </script>
 

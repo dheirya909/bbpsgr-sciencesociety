@@ -43,17 +43,13 @@
                 </ul>
             </li>
             <li class="nav-item"><a href="/contact.html">Contact</a></li>
-            <li class="nav-item"><a href="/Navachar.html" style="color: #00B4A6;">Navachar</a></li>
         </ul>
     </nav>
 
-    <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);">Our Events</h1>
-    <p style="text-align: center;" class="heading">Look at all the wonderful events hosted by the proud Science society. click on each card to view details</p>
+    <h1 style="text-align: center; margin: 120px auto 20px; color: var(--accent-color); font-weight: 300; font-size: 3rem;">Events</h1>
+    <p style="text-align: center; margin-bottom: 60px;" class="heading">Explore all the wonderful events hosted by Science Society</p>
 
     <main>
-
-        <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);">Upcoming events</h1>
-
         <section class="events-container">
             <div class="event-card">
                 <div class="event-card-inner">
@@ -84,13 +80,7 @@
                     </div>
                 </div>
             </div>
-            
-        </section>
 
-        <h1 style="text-align: center; margin: 100px auto 0; color: var(--accent-color);">Previous events</h1>
-
-        <section class="events-container">
-            
             <div class="event-card">
                 <div class="event-card-inner">
                     <div class="event-card-front">
@@ -214,6 +204,14 @@
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.pageYOffset / totalHeight) * 100;
             scrollProgress.style.transform = `scaleX(${progress / 100})`;
+
+            // Navbar dynamic island effect
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         // Enable click-to-flip functionality
