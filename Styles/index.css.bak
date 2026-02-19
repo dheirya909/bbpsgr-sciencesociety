@@ -31,8 +31,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(0.75rem, 2vw, 5%) clamp(0.75rem, 2vw, 5%);
-    padding-top: clamp(60px, 12vw, 100px);
+    padding: 0 5%;
+    padding-top: 80px;
     position: relative;
     background: var(--dark-bg);
     overflow: hidden;
@@ -43,8 +43,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(300px, 75vw, 800px);
-    height: clamp(300px, 75vw, 800px);
+    width: 800px;
+    height: 800px;
     opacity: 0.08;
     pointer-events: none;
     z-index: 0;
@@ -60,49 +60,45 @@ body {
     text-align: center;
     position: relative;
     z-index: 1;
-    max-width: 100%;
-    padding: clamp(1rem, 2vw, 2rem) clamp(0.5rem, 1vw, 1rem);
+    max-width: 800px;
 }
 
 .hero h1 {
-    font-size: clamp(1.8rem, 8vw, 5.5rem);
+    font-size: clamp(2.8rem, 10vw, 5.5rem);
     font-weight: 300;
     letter-spacing: -0.03em;
-    line-height: 1.2;
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
     color: var(--accent-color);
-    word-break: break-word;
 }
 
 .hero p {
-    font-size: clamp(0.9rem, 3.5vw, 1.8rem);
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
     font-weight: 300;
     letter-spacing: 0.05em;
     color: var(--accent-secondary);
-    margin-bottom: clamp(1.5rem, 3vw, 3rem);
+    margin-bottom: 3rem;
     text-transform: uppercase;
 }
 
 .hero-nav {
     display: flex;
-    gap: clamp(0.75rem, 2vw, 2rem);
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 0 clamp(0.5rem, 1vw, 1rem);
 }
 
 .hero-nav a {
-    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    font-size: 1rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     color: var(--accent-color);
     text-decoration: none;
     text-transform: uppercase;
-    padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 1rem);
+    padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
     position: relative;
-    white-space: nowrap;
 }
 
 .hero-nav a::after {
@@ -338,78 +334,60 @@ body {
 /* ====== RESPONSIVE DESIGN ====== */
 @media screen and (max-width: 768px) {
     .hero {
-        min-height: calc(100vh - clamp(48px, 10vw, 70px));
-        padding-top: clamp(55px, 11vw, 85px);
+        min-height: calc(100vh - 70px);
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .hero-nav {
+        gap: 1.5rem;
     }
 
     .logo-background {
+        width: 600px;
+        height: 600px;
         opacity: 0.06;
     }
 }
 
 @media (max-width: 480px) {
     .hero {
-        min-height: calc(100vh - clamp(48px, 9vw, 60px));
-        padding: clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.5vw, 1%);
-        padding-top: clamp(55px, 11vw, 70px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .hero-content {
-        padding: clamp(1.25rem, 2.5vw, 1.5rem) clamp(1rem, 2vw, 1.25rem);
-        max-width: 100%;
+        min-height: calc(100vh - 60px);
+        padding: 0 3%;
     }
 
     .hero h1 {
-        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
-        margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
-        line-height: 1.1;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
     }
 
     .hero p {
-        font-size: clamp(0.85rem, 3.2vw, 1.15rem);
-        margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
-        letter-spacing: 0.08em;
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
     }
 
     .hero-nav {
         flex-direction: column;
-        gap: clamp(0.65rem, 1.5vw, 0.85rem);
-        align-items: stretch;
-        max-width: 100%;
-        width: 100%;
+        gap: 1rem;
+        align-items: center;
     }
 
     .hero-nav a {
         display: block;
-        text-align: center;
         width: 100%;
-        padding: clamp(0.75rem, 1.8vw, 0.95rem) clamp(1rem, 2vw, 1.5rem);
-        border-radius: clamp(5px, 1vw, 7px);
-        background: rgba(26, 26, 26, 0.06);
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        border: 2px solid rgba(26, 26, 26, 0.2);
-        font-weight: 600;
-    }
-
-    .hero-nav a:hover {
-        background: rgba(26, 26, 26, 0.12);
-        border-color: var(--accent-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .hero-nav a:active {
-        transform: translateY(0);
+        text-align: center;
     }
 
     .logo-background {
+        width: 400px;
+        height: 400px;
         opacity: 0.05;
-        width: clamp(280px, 75vw, 380px);
-        height: clamp(280px, 75vw, 380px);
     }
 }
 

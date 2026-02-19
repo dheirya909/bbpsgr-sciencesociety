@@ -32,8 +32,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(60px, 10vw, 5%);
-    padding-top: clamp(60px, 12vw, 100px);
+    padding: 0 5%;
+    padding-top: 80px;
     position: relative;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     overflow: hidden;
@@ -57,15 +57,15 @@ body {
 .hero-content {
     background: rgba(30, 30, 30, 0.6);
     backdrop-filter: blur(20px);
-    padding: clamp(1.5rem, 3vw, 3rem);
-    border-radius: clamp(20px, 4vw, 30px);
+    padding: 3rem;
+    border-radius: 30px;
     text-align: center;
-    max-width: 100%;
+    max-width: 900px;
     position: relative;
     border: 2px solid rgba(0, 255, 212, 0.2);
     z-index: 10;
     animation: fadeInUp 1s ease-out;
-    margin: clamp(1.5rem, 3vw, 3rem);
+    margin: 3rem;
 }
 
 @keyframes fadeInUp {
@@ -80,50 +80,46 @@ body {
 }
 
 .hero h1 {
-    font-size: clamp(2rem, 8vw, 5rem);
+    font-size: clamp(3rem, 10vw, 5rem);
     background: linear-gradient(45deg, var(--accent-color), #00B4A6, var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    margin-bottom: 1rem;
     font-weight: 900;
-    letter-spacing: clamp(1px, 0.2vw, 2px);
-    line-height: 1.2;
-    word-break: break-word;
+    letter-spacing: 2px;
 }
 
 .tagline {
-    font-size: clamp(1rem, 3vw, 1.8rem);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
     color: var(--accent-color);
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 1.5rem;
     font-weight: 300;
     font-style: italic;
 }
 
 .description {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(1rem, 2vw, 1.1rem);
     opacity: 0.9;
-    margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+    margin-bottom: 2.5rem;
     line-height: 1.8;
 }
 
 .cta-buttons {
     display: flex;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 0 clamp(0.5rem, 1vw, 1rem);
 }
 
 .btn-primary, .btn-secondary {
-    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    padding: 1rem 2.5rem;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    font-size: clamp(0.85rem, 2vw, 1.1rem);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
     display: inline-block;
-    white-space: nowrap;
 }
 
 .btn-primary {
@@ -134,7 +130,7 @@ body {
 
 .btn-primary:hover {
     background: var(--hover-color);
-    transform: translateY(clamp(-2px, -0.4vw, -3px));
+    transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 255, 212, 0.6);
 }
 
@@ -147,7 +143,7 @@ body {
 .btn-secondary:hover {
     background: var(--accent-color);
     color: var(--dark-bg);
-    transform: translateY(clamp(-2px, -0.4vw, -3px));
+    transform: translateY(-3px);
 }
 
 /* Floating Elements */
@@ -162,7 +158,7 @@ body {
 
 .float-item {
     position: absolute;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: 3rem;
     color: var(--accent-color);
     opacity: 0.15;
     animation: float 6s ease-in-out infinite;
@@ -200,42 +196,42 @@ body {
 /* Event Stats */
 .event-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(150px, 80vw, 200px), 1fr));
-    gap: clamp(1rem, 2.5vw, 2rem);
-    padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 2.5vw, 5%);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 3rem 5%;
     background: var(--dark-secondary);
 }
 
 .stat-card {
     text-align: center;
-    padding: clamp(1.5rem, 2.5vw, 2rem) clamp(0.75rem, 1.5vw, 1rem);
-    border-radius: clamp(10px, 2vw, 15px);
+    padding: 2rem 1rem;
+    border-radius: 15px;
     background: var(--dark-tertiary);
     border: 1px solid rgba(0, 255, 212, 0.1);
     transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(clamp(-3px, -0.5vw, -5px));
+    transform: translateY(-5px);
     border-color: var(--accent-color);
     box-shadow: 0 10px 30px rgba(0, 255, 212, 0.2);
 }
 
 .stat-card i {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: 2.5rem;
     color: var(--accent-color);
-    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    margin-bottom: 1rem;
 }
 
 .stat-card h3 {
-    font-size: clamp(0.85rem, 2vw, 1rem);
+    font-size: 1rem;
     color: var(--dark-text);
     opacity: 0.8;
-    margin-bottom: clamp(0.35rem, 0.7vw, 0.5rem);
+    margin-bottom: 0.5rem;
 }
 
 .stat-card p {
-    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--accent-color);
 }
@@ -243,41 +239,40 @@ body {
 /* Section Header */
 .section-header {
     text-align: center;
-    margin-bottom: clamp(1.5rem, 3vw, 3rem);
+    margin-bottom: 3rem;
 }
 
 .section-header h2 {
-    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     color: var(--accent-color);
-    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
-    line-height: 1.2;
+    margin-bottom: 1rem;
 }
 
 .header-line {
-    width: clamp(60px, 15vw, 100px);
-    height: clamp(2px, 0.5vw, 4px);
+    width: 100px;
+    height: 4px;
     background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
     margin: 0 auto;
 }
 
 /* About Section */
 .about-section {
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 5%);
+    padding: 5rem 5%;
     background: linear-gradient(to bottom, var(--dark-secondary), var(--dark-bg));
 }
 
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(1.5rem, 3vw, 3rem);
+    gap: 3rem;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .about-text p {
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     opacity: 0.9;
 }
@@ -289,14 +284,14 @@ body {
 }
 
 .image-placeholder {
-    width: clamp(200px, 60vw, 300px);
-    height: clamp(200px, 60vw, 300px);
+    width: 300px;
+    height: 300px;
     background: var(--gradient-3);
-    border-radius: clamp(15px, 3vw, 20px);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(4rem, 15vw, 8rem);
+    font-size: 8rem;
     color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 20px 60px rgba(0, 255, 212, 0.3);
     animation: rotate3d 10s linear infinite;
@@ -304,22 +299,22 @@ body {
 
 /* Categories Section */
 .categories-section {
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 5%);
+    padding: 5rem 5%;
     background: var(--dark-bg);
 }
 
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 80vw, 280px), 1fr));
-    gap: clamp(1.5rem, 2.5vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .category-card {
     background: var(--dark-secondary);
-    padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    border-radius: clamp(15px, 3vw, 20px);
+    padding: 2.5rem;
+    border-radius: 20px;
     text-align: center;
     border: 2px solid rgba(0, 255, 212, 0.1);
     transition: all 0.4s ease;
@@ -343,78 +338,71 @@ body {
 }
 
 .category-card:hover {
-    transform: translateY(clamp(-5px, -1vw, -10px));
+    transform: translateY(-10px);
     border-color: var(--accent-color);
     box-shadow: 0 15px 40px rgba(0, 255, 212, 0.3);
 }
 
 .category-icon {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: 3rem;
     color: var(--accent-color);
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 1.5rem;
 }
 
 .category-card h3 {
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-size: 1.5rem;
     color: var(--accent-color);
-    margin-bottom: clamp(0.5rem, 1vw, 1rem);
-    line-height: 1.3;
+    margin-bottom: 1rem;
 }
 
 .category-card p {
     opacity: 0.8;
     line-height: 1.6;
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
 }
 
 /* Highlights Section */
 .highlights-section {
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 5%);
+    padding: 5rem 5%;
     background: var(--dark-secondary);
 }
 
 .highlights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 80vw, 250px), 1fr));
-    gap: clamp(1.5rem, 2.5vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .highlight-card {
     background: var(--dark-tertiary);
-    padding: clamp(1.5rem, 2vw, 2rem);
-    border-radius: clamp(10px, 2vw, 15px);
+    padding: 2rem;
+    border-radius: 15px;
     text-align: center;
     border: 1px solid rgba(0, 255, 212, 0.1);
     transition: all 0.3s ease;
 }
 
 .highlight-card:hover {
-    transform: translateY(clamp(-4px, -0.8vw, -8px));
+    transform: translateY(-8px);
     border-color: var(--accent-color);
 }
 
 .highlight-card i {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: 2.5rem;
     color: var(--accent-color);
-    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    margin-bottom: 1rem;
 }
 
 .highlight-card h3 {
-    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    font-size: 1.3rem;
     color: var(--accent-color);
-    margin-bottom: clamp(0.5rem, 1vw, 0.8rem);
-}
-
-.highlight-card p {
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-    opacity: 0.85;
+    margin-bottom: 0.8rem;
 }
 
 /* Timeline Section */
 .timeline-section {
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 5%);
+    padding: 5rem 5%;
     background: var(--dark-bg);
 }
 
@@ -437,7 +425,7 @@ body {
 
 .timeline-item {
     display: flex;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 3rem;
     position: relative;
 }
 
@@ -449,19 +437,19 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: clamp(14px, 2vw, 20px);
-    height: clamp(14px, 2vw, 20px);
+    width: 20px;
+    height: 20px;
     background: var(--accent-color);
     border-radius: 50%;
-    border: clamp(2px, 0.5vw, 4px) solid var(--dark-bg);
+    border: 4px solid var(--dark-bg);
     z-index: 2;
 }
 
 .timeline-content {
     width: 45%;
     background: var(--dark-secondary);
-    padding: clamp(1.5rem, 2vw, 2rem);
-    border-radius: clamp(10px, 2vw, 15px);
+    padding: 2rem;
+    border-radius: 15px;
     border: 1px solid rgba(0, 255, 212, 0.2);
 }
 
@@ -471,52 +459,50 @@ body {
 
 .timeline-content h3 {
     color: var(--accent-color);
-    margin-bottom: clamp(0.35rem, 0.7vw, 0.5rem);
-    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .timeline-content p {
     opacity: 0.8;
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
 }
 
 /* Register Section */
 .register-section {
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 5%);
+    padding: 5rem 5%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     text-align: center;
 }
 
 .register-content h2 {
-    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     color: white;
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
-    line-height: 1.2;
+    margin-bottom: 1.5rem;
 }
 
 .register-content p {
-    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
     max-width: 700px;
-    margin: 0 auto clamp(1.5rem, 2.5vw, 2rem);
+    margin: 0 auto 2rem;
     line-height: 1.8;
 }
 
 .register-btn {
     display: inline-block;
-    padding: clamp(0.8rem, 1.5vw, 1.2rem) clamp(2rem, 4vw, 3rem);
+    padding: 1.2rem 3rem;
     background: white;
     color: #667eea;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 700;
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-size: 1.2rem;
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .register-btn:hover {
-    transform: translateY(clamp(-3px, -0.5vw, -5px));
+    transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     background: var(--accent-color);
     color: var(--dark-bg);
@@ -529,22 +515,22 @@ body {
     }
 
     .image-placeholder {
-        width: clamp(180px, 50vw, 250px);
-        height: clamp(180px, 50vw, 250px);
-        font-size: clamp(4rem, 12vw, 6rem);
+        width: 250px;
+        height: 250px;
+        font-size: 6rem;
     }
 
     .timeline::before {
-        left: clamp(15px, 3vw, 20px);
+        left: 20px;
     }
 
     .timeline-item {
         flex-direction: column !important;
-        padding-left: clamp(35px, 8vw, 50px);
+        padding-left: 50px;
     }
 
     .timeline-marker {
-        left: clamp(15px, 3vw, 20px);
+        left: 20px;
     }
 
     .timeline-content {
@@ -555,21 +541,16 @@ body {
 
 @media screen and (max-width: 768px) {
     .hero {
-        min-height: calc(100vh - clamp(48px, 10vw, 70px));
-        padding: clamp(1rem, 2vw, 3%);
-        padding-top: clamp(55px, 10vw, 80px);
+        min-height: calc(100vh - 80px);
     }
 
     .hero-content {
-        padding: clamp(1.25rem, 2.5vw, 2rem);
-        margin: clamp(1rem, 2vw, 1.5rem);
+        padding: 2.5rem 1.5rem;
     }
 
     .cta-buttons {
         flex-direction: column;
-        gap: clamp(0.75rem, 1.5vw, 1rem);
-        align-items: center;
-        max-width: 100%;
+        gap: 1rem;
     }
 
     .btn-primary, .btn-secondary {
@@ -578,81 +559,74 @@ body {
     }
 
     .event-stats {
-        grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 40vw, 180px), 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 
     .categories-grid {
-        grid-template-columns: repeat(auto-fit, minmax(clamp(150px, 80vw, 250px), 1fr));
+        grid-template-columns: 1fr;
     }
 
     .highlights-grid {
-        grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 80vw, 220px), 1fr));
+        grid-template-columns: 1fr;
     }
 
     .float-item {
-        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-size: 2rem;
     }
 }
 
 @media screen and (max-width: 480px) {
     .hero-content {
-        padding: clamp(1rem, 1.5vw, 1.25rem);
-        margin: clamp(0.75rem, 1.5vw, 1rem);
+        padding: 2rem 1rem;
     }
 
-    .hero h1 {
-        font-size: clamp(1.5rem, 6vw, 2.5rem);
-    }
-
-    .event-stats {
-        gap: clamp(0.75rem, 1.5vw, 1rem);
-        grid-template-columns: 1fr;
+    .event-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 1rem;
     }
 
     .stat-card {
-        padding: clamp(1rem, 1.5vw, 1.25rem);
+        padding: 1.5rem 1rem;
     }
 
     .stat-card i {
-        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-size: 2rem;
     }
 
     .stat-card p {
-        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        font-size: 1.5rem;
     }
 
     .category-card {
-        padding: clamp(1.25rem, 2vw, 1.5rem);
+        padding: 2rem 1.5rem;
     }
 
     .category-icon {
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-size: 2.5rem;
     }
 
     .image-placeholder {
-        width: clamp(150px, 40vw, 200px);
-        height: clamp(150px, 40vw, 200px);
-        font-size: clamp(3rem, 10vw, 4rem);
+        width: 200px;
+        height: 200px;
+        font-size: 4rem;
     }
 
     .timeline-content {
-        padding: clamp(1rem, 1.5vw, 1.25rem);
+        padding: 1.5rem;
     }
 
     .register-content h2 {
-        font-size: clamp(1.2rem, 4vw, 1.8rem);
+        font-size: 1.8rem;
     }
 
     .register-content p {
-        font-size: clamp(0.85rem, 2vw, 1rem);
-        margin-bottom: clamp(1rem, 1.8vw, 1.25rem);
+        font-size: 1rem;
     }
 
     .register-btn {
-        padding: clamp(0.65rem, 1.2vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
-        font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-        width: 100%;
-        max-width: 280px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
     }
 }
 

@@ -8,6 +8,103 @@
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/Styles/common.css">
     <link rel="stylesheet" href="/Styles/members.css">
+
+    <style>
+        /* Carousel Styles - Universal */
+        .carousel-container {
+            position: relative;
+            max-width: clamp(300px, 90vw, 500px);
+            margin: 2rem auto;
+            padding: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(1rem, 3vw, 2rem);
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+            padding: 0 clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .carousel-btn {
+            width: clamp(40px, 8vw, 50px);
+            height: clamp(40px, 8vw, 50px);
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
+
+        .carousel-btn:active {
+            transform: scale(0.95);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: clamp(0.5rem, 1vw, 0.75rem);
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            width: clamp(8px, 2vw, 10px);
+            height: clamp(8px, 2vw, 10px);
+            border-radius: 50%;
+            background: rgba(26, 26, 26, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .indicator.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .carousel-slide .card {
+            cursor: grab;
+        }
+
+        .carousel-slide .card:active {
+            cursor: grabbing;
+        }
+
+        /* Hide grid container */
+        .container {
+            display: none;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -48,6 +145,25 @@
 
     <h1 style="text-align: center; margin: 100px auto 0; color: #1a1a1a;" class="heading">Our Teachers Incharge</h1>
     <p style="text-align: center; " class="heading">Meet the dedicated teachers incharge of the BBPS Science Society. Click on the cards to learn more about each Teacher.</p>
+
+
+    <!-- Carousel for Mobile -->
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Carousel slides will be populated by JavaScript -->
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="carousel-btn" id="prevBtn" aria-label="Previous teacher">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-btn" id="nextBtn" aria-label="Next teacher">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="carousel-indicators" id="indicators"></div>
+    </div>
 
     <!-- Container -->
     <div class="container">
@@ -168,6 +284,118 @@
             navLinks.classList.toggle('active');
         });
 
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.nav-item > p').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.classList.toggle('active');
+                }
+            });
+        });
+
+        // ==================== CAROUSEL FUNCTIONALITY ====================
+        let currentSlide = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function initCarousel() {
+            const cards = document.querySelectorAll('.container .card');
+            const track = document.getElementById('carouselTrack');
+            const indicators = document.getElementById('indicators');
+
+            if (cards.length === 0 || track === null) return;
+
+            // Populate carousel with cloned cards
+            cards.forEach((card, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.appendChild(card.cloneNode(true));
+                track.appendChild(slide);
+
+                // Add click-to-flip functionality to cloned cards
+                const clonedCard = slide.querySelector('.card');
+                clonedCard.addEventListener('click', () => {
+                    clonedCard.classList.toggle('flipped');
+                });
+
+                // Create indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicators.appendChild(indicator);
+            });
+
+            // Add event listeners
+            document.getElementById('prevBtn').addEventListener('click', prevSlide);
+            document.getElementById('nextBtn').addEventListener('click', nextSlide);
+
+            // Touch swipe support
+            track.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            track.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            // Keyboard navigation (works everywhere)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'ArrowRight') nextSlide();
+            });
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }
+
+        function goToSlide(n) {
+            const track = document.getElementById('carouselTrack');
+            const indicators = document.querySelectorAll('.indicator');
+            const slides = document.querySelectorAll('.carousel-slide');
+
+            if (n >= slides.length) currentSlide = 0;
+            if (n < 0) currentSlide = slides.length - 1;
+
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            indicators.forEach(ind => ind.classList.remove('active'));
+            indicators[currentSlide]?.classList.add('active');
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            if (currentSlide < 0) {
+                currentSlide = document.querySelectorAll('.carousel-slide').length - 1;
+            }
+            goToSlide(currentSlide);
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            if (currentSlide >= document.querySelectorAll('.carousel-slide').length) {
+                currentSlide = 0;
+            }
+            goToSlide(currentSlide);
+        }
+
         // Scroll Progress
         window.addEventListener('scroll', () => {
             const scrollProgress = document.getElementById('scrollProgress');
@@ -184,32 +412,12 @@
             }
         });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('flipped');
-                });
-            });
-        });
-
-        document.querySelectorAll('.nav-item > p').forEach(item => {
-    item.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            e.preventDefault();
-            const parent = this.parentElement;
-            parent.classList.toggle('active');
+        // Initialize carousel when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCarousel);
+        } else {
+            initCarousel();
         }
-    });
-});
-
     </script>
 </body>
 </html>

@@ -33,25 +33,27 @@ body {
 .heading {
     color: var(--accent-secondary);
     font-weight: 400;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
     letter-spacing: 0.3px;
+    padding-top: clamp(2rem, 5vw, 4rem);
+    text-align: center;
 }
 
 .projects-container {
-    padding: 3rem 5%;
+    padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.5vw, 5%);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 80vw, 300px), 1fr));
+    gap: clamp(1.5rem, 2.5vw, 2.5rem);
     max-width: 1400px;
     margin: 0 auto;
 }
 
 .project-card {
     background: var(--dark-secondary);
-    border-radius: 12px;
-    padding: 2.5rem;
+    border-radius: clamp(8px, 1.5vw, 12px);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -69,12 +71,12 @@ body {
     height: 3px;
     background: var(--accent-color);
     transform: scaleX(0);
-    transition: transform 0.5s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform-origin: left;
 }
 
 .project-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(clamp(-4px, -1vw, -8px));
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
@@ -84,9 +86,9 @@ body {
 }
 
 .project-icon {
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     color: var(--accent-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
     transition: all 0.3s ease;
 }
 
@@ -96,17 +98,19 @@ body {
 
 .project-card h3 {
     color: var(--accent-color);
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
     font-weight: 600;
+    line-height: 1.3;
+    word-break: break-word;
 }
 
 .project-card p {
     color: var(--accent-secondary);
     opacity: 0.85;
-    margin-bottom: 1.5rem;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
     flex-grow: 1;
 }
 
@@ -114,78 +118,35 @@ body {
     display: inline-block;
     background: rgba(0, 0, 0, 0.06);
     color: var(--accent-color);
-    padding: 0.5rem 1rem;
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.75rem, 1.5vw, 1rem);
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
     font-weight: 500;
     border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768px) {
-    .projects-container {
-        padding: 2rem 5%;
-        gap: 2rem;
-    }
-
-    .project-card {
-        padding: 2rem;
-    }
-
-    .project-icon {
-        font-size: 2.5rem;
-    }
-
-    .project-card h3 {
-        font-size: 1.2rem;
-    }
-
-    .project-card p {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .projects-container {
-        padding: 1.5rem 3%;
-        gap: 1.5rem;
-        grid-template-columns: 1fr;
-    }
-
-    .project-card {
-        padding: 1.5rem;
-    }
-
-    .project-icon {
-        font-size: 2rem;
-    }
-
-    .project-card h3 {
-        font-size: 1.1rem;
-    }
 }
 
 /* CTA Section */
 .cta-section {
     background: var(--dark-secondary);
-    padding: 4rem 5%;
+    padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 2.5vw, 5%);
     text-align: center;
     max-width: 1400px;
-    margin: 4rem auto;
-    border-radius: 12px;
+    margin: clamp(2rem, 4vw, 4rem) auto;
+    border-radius: clamp(8px, 1.5vw, 12px);
     border: 2px solid var(--accent-color);
 }
 
 .cta-section h2 {
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 3vw, 2rem);
     color: var(--accent-color);
-    margin-bottom: 1rem;
+    margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
     font-weight: 600;
 }
 
 .cta-section p {
-    font-size: 1rem;
+    font-size: clamp(0.8rem, 2vw, 1rem);
     color: var(--accent-secondary);
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -195,12 +156,12 @@ body {
     display: inline-block;
     background: var(--accent-color);
     color: var(--dark-bg);
-    padding: 1rem 2.5rem;
-    border-radius: 8px;
+    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    border-radius: clamp(4px, 1vw, 8px);
     text-decoration: none;
     font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: 2px solid var(--accent-color);
 }
 
@@ -211,43 +172,107 @@ body {
 }
 
 @media (max-width: 768px) {
+    .heading {
+        font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+        padding-top: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .projects-container {
+        grid-template-columns: repeat(auto-fit, minmax(clamp(160px, 50vw, 260px), 1fr));
+        gap: clamp(1rem, 2vw, 1.75rem);
+    }
+
+    .project-card {
+        padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    }
+
+    .project-icon {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+    }
+
+    .project-card h3 {
+        font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+    }
+
+    .project-card p {
+        font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+    }
+
     .cta-section {
-        padding: 3rem 5%;
-        margin: 3rem auto;
+        margin: clamp(1.5rem, 3vw, 2rem) auto;
     }
 
     .cta-section h2 {
-        font-size: 1.6rem;
+        font-size: clamp(1rem, 2.5vw, 1.6rem);
     }
 
     .cta-section p {
-        font-size: 0.95rem;
+        font-size: clamp(0.75rem, 1.8vw, 0.95rem);
     }
 
     .cta-button {
-        padding: 0.8rem 2rem;
-        font-size: 0.95rem;
+        padding: clamp(0.6rem, 1.2vw, 0.8rem) clamp(1.2rem, 2vw, 2rem);
+        font-size: clamp(0.75rem, 1.8vw, 0.95rem);
     }
 }
 
 @media (max-width: 480px) {
+    .heading {
+        font-size: clamp(0.8rem, 2vw, 0.9rem);
+        padding-top: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .projects-container {
+        padding: clamp(0.75rem, 2vw, 1rem) clamp(0.75rem, 2vw, 2%);
+        grid-template-columns: 1fr;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .project-card {
+        padding: clamp(1rem, 2vw, 1.25rem);
+    }
+
+    .project-icon {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
+        margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .project-card h3 {
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+        margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .project-card p {
+        font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+        margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    }
+
     .cta-section {
-        padding: 2rem 5%;
-        margin: 2rem auto;
-        border-radius: 8px;
+        padding: clamp(1.5rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.5%);
+        margin: clamp(1rem, 2vw, 1.5rem) auto;
+        border-radius: clamp(6px, 1vw, 8px);
     }
 
     .cta-section h2 {
-        font-size: 1.4rem;
+        font-size: clamp(1rem, 2.2vw, 1.4rem);
+        margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
     }
 
     .cta-section p {
-        font-size: 0.9rem;
+        font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+        margin-bottom: clamp(1rem, 1.8vw, 1.25rem);
     }
 
     .cta-button {
-        padding: 0.7rem 1.8rem;
-        font-size: 0.9rem;
+        display: block;
+        padding: clamp(0.5rem, 1vw, 0.7rem) clamp(1rem, 1.5vw, 1.2rem);
+        font-size: clamp(0.7rem, 1.6vw, 0.9rem);
         width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card {
+        transition: none !important;
     }
 }
